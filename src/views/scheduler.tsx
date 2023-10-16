@@ -1,7 +1,8 @@
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { WingProps, getWings } from "../utils/data";
+import { useEffect } from "react";
 
 export async function loader() {
   const wings = await getWings();
@@ -9,7 +10,15 @@ export async function loader() {
 }
 
 const Scheduler = () => {
+  const navigate = useNavigate();
   const wings = useLoaderData() as unknown as WingProps;
+  
+  useEffect(() => {
+    if(wings){
+      const n = wings[0].name.toLocaleLowerCase();
+      navigate(n)
+    }
+  }, []);
 
   return (
     <div className="w-full h-full px-4">
@@ -51,7 +60,7 @@ const Scheduler = () => {
                   key={wing.name}
                   className="px-8 border-r border-slate-500 font-semibold"
                 >
-                  {wing.name}
+                  <Link to={wing.name.toLocaleLowerCase()}>{wing.name}</Link>
                 </li>
               ))}
             </ul>

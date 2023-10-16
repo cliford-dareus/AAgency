@@ -8,10 +8,12 @@ export const mockData = [
         lead: "Douglas",
         positions: [
           {
+            id: "1",
             position: "nurse",
             employee: [""],
           },
           {
+            id: "2",
             position: "cna",
             employee: [""],
           },
@@ -22,11 +24,13 @@ export const mockData = [
         lead: "Johns",
         positions: [
           {
-            position: "nurse",
+            id: "1",
+            position: "nurses",
             employee: [""],
           },
           {
-            position: "cna",
+            id: "2",
+            position: "monitors",
             employee: [""],
           },
         ],
