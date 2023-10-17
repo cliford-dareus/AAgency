@@ -9,13 +9,13 @@ export const mockData = [
         positions: [
           {
             id: "1",
-            position: "nurse",
-            employee: [""],
+            position: "nurses",
+            employee: [{ name: "Williams" }],
           },
           {
             id: "2",
             position: "cna",
-            employee: [""],
+            employee: [{ name: "John" }],
           },
         ],
       },
@@ -26,12 +26,12 @@ export const mockData = [
           {
             id: "1",
             position: "nurses",
-            employee: [""],
+            employee: [{ name: "Ellen" }, { name: "Smith" }],
           },
           {
             id: "2",
             position: "monitors",
-            employee: [""],
+            employee: [{ name: "Lovely" }],
           },
         ],
       },
@@ -42,7 +42,7 @@ export const mockData = [
 export const mockEmployees = [
   {
     name: "Douglas",
-    position: "nurse",
+    position: "nurses",
     hired_date: "10 october 2023",
   },
 ];

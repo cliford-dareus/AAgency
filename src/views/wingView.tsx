@@ -3,23 +3,30 @@ import { useParams } from "react-router-dom";
 import { getWings } from "../utils/data";
 
 const WingView = () => {
-  const [ data, setData] = useState({})
-  const params = useParams()
+  const params = useParams();
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const data = async () => {
-      const d = await getWings()
-      const w = d?.find(w => w.name === params.wingId)
-      setData(w)
-    }
+      const d = await getWings();
+      const w = d?.find((w) => w.name === params.wingId);
+      setData(w);
+    };
 
     data();
-  }, [params])
+  }, [params]);
 
   return (
     <div className="">
       {data?.positions?.map((position) => (
-        <p key={position.id}>{position.position}</p>
+        <div className="" key={position.id}>
+          <p className="font-bold">{position.position}</p>
+          <div>
+            {position.employee.map((g) => (
+              <p key={g.name}>{g.name}</p>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );
