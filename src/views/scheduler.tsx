@@ -1,17 +1,33 @@
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
-import useGetUnitName from "../utils/hooks/useGetUnitsName";
-import useGetCalenda from "../utils/hooks/useGetCalenda";
 import { months } from "../utils/common";
+import { Link, Outlet } from "react-router-dom";
+import { Button } from "../components/ui/button";
+import useGetCalenda from "../utils/hooks/useGetCalenda";
+import useGetUnitName from "../utils/hooks/useGetUnitsName";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import * as z from "zod";
+import { UnitSchema } from "@/utils/schema";
+import UnitForm from "@/components/Forms/unitForm";
 
 const Scheduler = () => {
   const { currentDay, currentDays, currentDayIndex, setCurrentDay } =
     useGetCalenda();
   const currentScheduleDay = currentDays[currentDayIndex!];
   const dayParam = new Date(currentScheduleDay.date).toDateString();
+  const { units } = useGetUnitName(dayParam);
 
-  const { units, schedule } = useGetUnitName(dayParam);
+  const onSubmit = (data: z.infer<typeof UnitSchema>) => {
+    const scheduleId = `sch_${dayParam}`
+    console.log(data);
+  };
 
   return (
     <div className="w-full h-full px-4">
@@ -83,11 +99,23 @@ const Scheduler = () => {
                 </li>
               ))}
             </ul>
+
             <div className="flex gap-2 px-4 items-center">
-              <div className="bg-blue-400 flex px-4 py-1">
-                <Plus />
-                <p>New Unit</p>
-              </div>
+              <Dialog>
+                <DialogTrigger>
+                  <Button className="bg-blue-400 flex px-4 py-1">
+                    <Plus />
+                    <p>New Unit</p>
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Create Unit/Wing</DialogTitle>
+                    <UnitForm onSubmit={onSubmit} />
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./components/layouts/Root";
 import Scheduler from "./views/scheduler";
-import { loader as wingLoader } from "./views/scheduler";
 import WingView from "./views/wingView";
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
         {
           path: "scheduler",
           element: <Scheduler />,
-          loader: wingLoader,
           children: [
             {
               path: "",
