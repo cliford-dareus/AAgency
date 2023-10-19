@@ -41,7 +41,7 @@ const useGetCalenda = () => {
       return (currentDayIndex = index);
   });
 
-  return { currentDayIndex, currentDay, setCurrentDay };
+  return { currentDayIndex, currentDay, setCurrentDay, currentDays };
 };
 
 export default useGetCalenda;

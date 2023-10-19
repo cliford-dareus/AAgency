@@ -1,34 +1,17 @@
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { WingProps, getWings } from "../utils/data";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchSchedules } from "../features/scheduler/schedulerSlice";
 import useGetUnitName from "../utils/hooks/useGetUnitsName";
-
-export async function loader() {
-  const wings = await getWings();
-  return wings;
-}
+import useGetCalenda from "../utils/hooks/useGetCalenda";
+import { months } from "../utils/common";
 
 const Scheduler = () => {
-  const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
-  // const schedule = useAppSelector(state => state.shedule.schedules)
-  const wings = useLoaderData() as unknown as WingProps;
-  const { units, schedule } = useGetUnitName('Wed Oct 18 2023');
+  const { currentDay, currentDays, currentDayIndex, setCurrentDay } =
+    useGetCalenda();
+  const currentScheduleDay = currentDays[currentDayIndex!];
+  const dayParam = new Date(currentScheduleDay.date).toDateString();
 
-  console.log(units)
-
-
-  // useEffect(() => {
-  //   dispatch(fetchSchedules());
-  //   if (wings) {
-  //     const n = wings[0].name.toLocaleLowerCase();
-  //     navigate(n);
-  //   }
-  // }, []);
+  const { units, schedule } = useGetUnitName(dayParam);
 
   return (
     <div className="w-full h-full px-4">
@@ -47,13 +30,38 @@ const Scheduler = () => {
             </div>
 
             <div className="flex ml-8 bg-slate-400 rounded-full h-full items-center px-4 gap-4">
-              <div className="">
+              <div
+                className=""
+                onClick={() =>
+                  setCurrentDay(
+                    new Date(
+                      currentScheduleDay.year,
+                      currentScheduleDay.month,
+                      currentScheduleDay.number - 1
+                    )
+                  )
+                }
+              >
                 <ChevronLeft />
               </div>
 
-              <p>October 2023</p>
+              <p>
+                {currentScheduleDay.number} {months[currentDay.getMonth()]}{" "}
+                {currentDay.getFullYear()}
+              </p>
 
-              <div className="">
+              <div
+                className=""
+                onClick={() =>
+                  setCurrentDay(
+                    new Date(
+                      currentScheduleDay.year,
+                      currentScheduleDay.month,
+                      currentScheduleDay.number + 1
+                    )
+                  )
+                }
+              >
                 <ChevronRight />
               </div>
             </div>
@@ -63,21 +71,22 @@ const Scheduler = () => {
             </div>
           </div>
 
+          {/* Extract to component */}
           <div className="flex mt-4 border-b items-center pb-4">
             <ul className="flex">
-              {wings?.map((wing) => (
+              {units?.map((unit) => (
                 <li
-                  key={wing.name}
+                  key={unit.name}
                   className="px-8 border-r border-slate-500 font-semibold"
                 >
-                  <Link to={wing.name.toLocaleLowerCase()}>{wing.name}</Link>
+                  <Link to={unit.name.toLocaleLowerCase()}>{unit.name}</Link>
                 </li>
               ))}
             </ul>
             <div className="flex gap-2 px-4 items-center">
               <div className="bg-blue-400 flex px-4 py-1">
                 <Plus />
-                <p>New Wing</p>
+                <p>New Unit</p>
               </div>
             </div>
           </div>
