@@ -3,6 +3,9 @@ import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { WingProps, getWings } from "../utils/data";
 import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { fetchSchedules } from "../features/scheduler/schedulerSlice";
+import useGetUnitName from "../utils/hooks/useGetUnitsName";
 
 export async function loader() {
   const wings = await getWings();
@@ -11,14 +14,21 @@ export async function loader() {
 
 const Scheduler = () => {
   const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
+  // const schedule = useAppSelector(state => state.shedule.schedules)
   const wings = useLoaderData() as unknown as WingProps;
-  
-  useEffect(() => {
-    if(wings){
-      const n = wings[0].name.toLocaleLowerCase();
-      navigate(n)
-    }
-  }, []);
+  const { units, schedule } = useGetUnitName('Wed Oct 18 2023');
+
+  console.log(units)
+
+
+  // useEffect(() => {
+  //   dispatch(fetchSchedules());
+  //   if (wings) {
+  //     const n = wings[0].name.toLocaleLowerCase();
+  //     navigate(n);
+  //   }
+  // }, []);
 
   return (
     <div className="w-full h-full px-4">

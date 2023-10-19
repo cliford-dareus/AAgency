@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getWings } from "../utils/data";
+import { Plus } from "lucide-react";
 
 const WingView = () => {
   const params = useParams();
@@ -17,14 +18,19 @@ const WingView = () => {
   }, [params]);
 
   return (
-    <div className="">
+    <div className="bg-slate-400 rounded-md p-4">
       {data?.positions?.map((position) => (
-        <div className="" key={position.id}>
+        // Position name
+        <div className="w-full " key={position.id}>
           <p className="font-bold">{position.position}</p>
-          <div>
+          {/* Employee list */}
+          <div className="">
             {position.employee.map((g) => (
-              <p key={g.name}>{g.name}</p>
+              <p className="" key={g.name}>{g.name}</p>
             ))}
+            <button className="">
+              <Plus />
+            </button>
           </div>
         </div>
       ))}

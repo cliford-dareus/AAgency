@@ -47,6 +47,7 @@ export const mockEmployees = [
   },
 ];
 
+
 export const getWings = async () => {
   return mockData.find((w) => w.date === "10 october 2023")?.data;
 };
