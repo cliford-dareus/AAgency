@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import { months } from "../utils/common";
-import { Link, Outlet, useSearchParams } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import useGetCalenda from "../utils/hooks/useGetCalenda";
 import useGetUnitName from "../utils/hooks/useGetUnitsName";
@@ -24,21 +24,19 @@ const Scheduler = () => {
     useGetCalenda();
   const currentScheduleDay = currentDays[currentDayIndex!];
   const dayParam = new Date(currentScheduleDay.date).toDateString();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { units } = useGetUnitName(dayParam);
 
-  console.log(units)
-  
+  // console.log(units);
+
   const onSubmit = (data: z.infer<typeof UnitSchema>) => {
     // const scheduleId = `sch_${dayParam}`;
     console.log(data);
   };
-  
+
   useEffect(() => {
-    if(units && units?.length > 0) {
-      // setSearchParams(units[0]?.name ?? '/')
-    }
-  }, [units])
+    navigate(units && units?.length > 0 ? `${units[0]?.name}` : "");
+  }, [units]);
 
   return (
     <div className="w-full h-full px-4">

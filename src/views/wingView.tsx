@@ -19,17 +19,18 @@ const WingView = () => {
   const dispatch = useAppDispatch();
   const units = useAppSelector((state: RootState) => state.unit.unit);
 
-  function onSubmit() {}
+  // console.log(units);
+
+  
 
   useEffect(() => {
     if (params.wingId === undefined) return;
     dispatch(fetchUnit(params.wingId!));
   }, [params]);
 
-
   return (
     <div className="bg-slate-400 rounded-md p-4">
-      {units.shifts ? (
+      {units?.shifts.length === 0 ? (
         <div>
           <div>
             <Dialog>
@@ -43,7 +44,7 @@ const WingView = () => {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Create Shift/Position</DialogTitle>
-                  <UnitForm onSubmit={onSubmit} />
+                  <UnitForm />
                 </DialogHeader>
               </DialogContent>
             </Dialog>
@@ -51,22 +52,27 @@ const WingView = () => {
         </div>
       ) : (
         <div>
-          {units?.shifts?.map((position) => (
-            <div className="w-full " key={position.id}>
-              <p className="font-bold">{position.position}</p>
+          {units.shifts &&
+            units?.shifts.map((shift) => (
+              <div className="w-full " key={shift.id}>
+                <p className="font-bold">
+                  {shift.name} {shift.time}
+                </p>
 
-              <div className="">
-                {position?.employee.map((g) => (
-                  <p className="" key={g.name}>
-                    {g.name}
-                  </p>
-                ))}
-                <button className="">
-                  <Plus />
-                </button>
+                <div className="">
+                  {shift.employees &&
+                    shift?.employees.map((employee) => (
+                      <p className="" key={employee.name}>
+                        {employee.name}
+                      </p>
+                    ))}
+
+                  <button className="">
+                    <Plus />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

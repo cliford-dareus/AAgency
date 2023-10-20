@@ -3,11 +3,9 @@ import { RootState } from "../../app/store";
 import { useEffect, useState } from "react";
 import { fetchSchedules } from "../../features/scheduler/schedulerSlice";
 import { Units } from "../type";
-import { useSearchParams } from "react-router-dom";
 
 const useGetUnitName = (date: string) => {
   const [units, setUnits] = useState<Units[] | undefined>();
-  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const schedule = useAppSelector(
     (state: RootState) => state.shedule.schedules

@@ -17,7 +17,7 @@ export type Shifts = {
   id: string;
   name: string;
   time: string;
-  position: User[];
+  employees: User[];
 };
 
 export type User = {
