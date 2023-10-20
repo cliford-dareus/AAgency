@@ -6,7 +6,7 @@ export const mockData = [
       {
         name: "westwing",
         lead: "Douglas",
-        positions: [
+        shift: [
           {
             id: "1",
             position: "nurses",

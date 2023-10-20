@@ -16,13 +16,12 @@ const initialState = {
 } as SchedulesState;
 
 const scheduleSlice = createSlice({
-  name:"schedule",
+  name: "schedule",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchSchedules.fulfilled, (state,action) => {
-      // console.log(action.payload);
-      state.schedules = action.payload
+    builder.addCase(fetchSchedules.fulfilled, (state, action) => {
+      state.schedules = action.payload;
     });
   },
 });

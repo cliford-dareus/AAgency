@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import { months } from "../utils/common";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import useGetCalenda from "../utils/hooks/useGetCalenda";
 import useGetUnitName from "../utils/hooks/useGetUnitsName";
@@ -16,18 +16,29 @@ import {
 import * as z from "zod";
 import { UnitSchema } from "@/utils/schema";
 import UnitForm from "@/components/Forms/unitForm";
+import { Input } from "@/components/ui/input";
+import { useEffect } from "react";
 
 const Scheduler = () => {
   const { currentDay, currentDays, currentDayIndex, setCurrentDay } =
     useGetCalenda();
   const currentScheduleDay = currentDays[currentDayIndex!];
   const dayParam = new Date(currentScheduleDay.date).toDateString();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { units } = useGetUnitName(dayParam);
 
+  console.log(units)
+  
   const onSubmit = (data: z.infer<typeof UnitSchema>) => {
-    const scheduleId = `sch_${dayParam}`
+    // const scheduleId = `sch_${dayParam}`;
     console.log(data);
   };
+  
+  useEffect(() => {
+    if(units && units?.length > 0) {
+      // setSearchParams(units[0]?.name ?? '/')
+    }
+  }, [units])
 
   return (
     <div className="w-full h-full px-4">
@@ -38,7 +49,7 @@ const Scheduler = () => {
           <div className="flex h-[35px] items-center mt-8">
             <div className="w-[350px] bg-slate-400 flex rounded-full h-full items-center px-4">
               <Search />
-              <input
+              <Input
                 className="bg-transparent h-full flex-1 placeholder:text-white px-4 outline-none border-none"
                 type="text"
                 placeholder="search..."
@@ -95,7 +106,7 @@ const Scheduler = () => {
                   key={unit.name}
                   className="px-8 border-r border-slate-500 font-semibold"
                 >
-                  <Link to={unit.name.toLocaleLowerCase()}>{unit.name}</Link>
+                  <Link to={unit.name}>{unit.name}</Link>
                 </li>
               ))}
             </ul>

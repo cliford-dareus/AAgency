@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import scheduleReducer from "../features/scheduler/schedulerSlice";
+import unitReducer from "../features/units/unitSlice";
 
 export const store = configureStore({
   reducer: {
-    shedule: scheduleReducer
+    shedule: scheduleReducer,
+    unit: unitReducer
   },
 });
 
