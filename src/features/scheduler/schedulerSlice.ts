@@ -9,10 +9,12 @@ export const fetchSchedules = createAsyncThunk("schedules/fetch", async () => {
 
 interface SchedulesState {
   schedules: Schedules[];
+  isLoading: boolean;
 }
 
 const initialState = {
   schedules: [],
+  isLoading: true
 } as SchedulesState;
 
 const scheduleSlice = createSlice({
@@ -20,6 +22,9 @@ const scheduleSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchSchedules.pending, (state) => {
+      state.isLoading = false
+    }),
     builder.addCase(fetchSchedules.fulfilled, (state, action) => {
       state.schedules = action.payload;
     });

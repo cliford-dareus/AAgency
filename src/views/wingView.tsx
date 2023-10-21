@@ -12,25 +12,56 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import UnitForm from "@/components/Forms/unitForm";
+import { Group, Shifts } from "@/utils/type";
+import ShiftCard from "@/components/shiftCard";
+import ShiftForm from "@/components/Forms/shiftForm";
+import { ShiftSchema } from "@/utils/schema";
+import { addShifts, fetchShifts } from "@/features/shifts/shiftSlice";
+import { z } from "zod";
 
 const WingView = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const units = useAppSelector((state: RootState) => state.unit.unit);
+  const shifts = useAppSelector((state: RootState) => state.shifts.shifts)
 
-  // console.log(units);
+  // console.log(shifts)
 
-  
+  const groupShift = (shifts: Shifts[]) => {
+    return shifts?.reduce((acc, shift) => {
+      if (acc[shift.name]) {
+        acc[shift.name] = {
+          ...acc[shift?.name],
+          employee: [...acc[shift.name].employee, ...shift.employee],
+        };
+      } else {
+        acc[shift?.name] = shift;
+      }
+
+      return acc;
+    }, {} as { [key: string]: Group });
+  };
+
+  const onSubmit = (data: z.infer<typeof ShiftSchema>) => {
+    const unitId = units.id;
+    const { name, time } = data;
+    try {
+      dispatch(addShifts({unitId, name, time,id: 'shi_'}))
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (params.wingId === undefined) return;
     dispatch(fetchUnit(params.wingId!));
-  }, [params]);
+
+    dispatch(fetchShifts(units.id))
+  }, [params, dispatch, units.id]);
 
   return (
     <div className="bg-slate-400 rounded-md p-4">
-      {units?.shifts.length === 0 ? (
+      {units.shifts && units?.shifts.length === 0 ? (
         <div>
           <div>
             <Dialog>
@@ -44,35 +75,15 @@ const WingView = () => {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Create Shift/Position</DialogTitle>
-                  <UnitForm />
+                  <ShiftForm onSubmit={onSubmit} />
                 </DialogHeader>
               </DialogContent>
             </Dialog>
           </div>
         </div>
       ) : (
-        <div>
-          {units.shifts &&
-            units?.shifts.map((shift) => (
-              <div className="w-full " key={shift.id}>
-                <p className="font-bold">
-                  {shift.name} {shift.time}
-                </p>
-
-                <div className="">
-                  {shift.employees &&
-                    shift?.employees.map((employee) => (
-                      <p className="" key={employee.name}>
-                        {employee.name}
-                      </p>
-                    ))}
-
-                  <button className="">
-                    <Plus />
-                  </button>
-                </div>
-              </div>
-            ))}
+        <div className="">
+          <ShiftCard unit={groupShift(shifts)} />
         </div>
       )}
     </div>

@@ -21,13 +21,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../ui/button";
 
-
-const UnitForm = () => {
+const UnitForm = ({
+  onSubmit,
+}: {
+  onSubmit: (data: z.infer<typeof UnitSchema>) => void;
+}) => {
   const form = useForm<z.infer<typeof UnitSchema>>({
     resolver: zodResolver(UnitSchema),
   });
-
-  function onSubmit() {}
 
   return (
     <Form {...form}>

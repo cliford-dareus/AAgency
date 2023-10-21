@@ -17,11 +17,24 @@ export type Shifts = {
   id: string;
   name: string;
   time: string;
-  employees: User[];
+  employee: Employee[];
 };
+
+export type Group = {
+  id: string;
+  name: string;
+  time: string;
+  employee: Employee[];
+};
+
+export type Employee = {
+  id: string;
+  shiftId: string;
+  userId: string;
+  user: User;
+}
 
 export type User = {
   id: string;
   name: string;
-  
 }

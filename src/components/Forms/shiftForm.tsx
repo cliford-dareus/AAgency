@@ -6,28 +6,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
-import { UnitSchema } from "@/utils/schema";
+import { ShiftSchema } from "@/utils/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../ui/button";
 
 type Props = {
-  onSubmit: (data: z.infer<typeof UnitSchema>) => void;
+  onSubmit: (data: z.infer<typeof ShiftSchema>) => void;
 };
 
-const UnitForm = ({ onSubmit }: Props) => {
-  const form = useForm<z.infer<typeof UnitSchema>>({
-    resolver: zodResolver(UnitSchema),
+const ShiftForm = ({ onSubmit }: Props) => {
+  const form = useForm<z.infer<typeof ShiftSchema>>({
+    resolver: zodResolver(ShiftSchema),
   });
 
   return (
@@ -49,22 +42,13 @@ const UnitForm = ({ onSubmit }: Props) => {
 
         <FormField
           control={form.control}
-          name="lead"
+          name="time"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Lead</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -75,4 +59,4 @@ const UnitForm = ({ onSubmit }: Props) => {
   );
 };
 
-export default UnitForm;
+export default ShiftForm;

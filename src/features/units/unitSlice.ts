@@ -10,6 +10,26 @@ export const fetchUnit = createAsyncThunk(
   }
 );
 
+export const addUnitFetch = createAsyncThunk(
+  "unit/add",
+  async (
+    unit: { id: string; name: string; lead: string; scheduleId: string },
+    thunkApi
+  ) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/v1/unit", {
+        method: "POST",
+        body: JSON.stringify(unit),
+        headers: { "Content-Type": "application/json" },
+      });
+      const result = await res.json();
+      return thunkApi.fulfillWithValue(result);
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
 interface UnitState {
   unit: Units;
 }
@@ -28,9 +48,13 @@ const unitSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUnit.fulfilled, (state, action) => {
-      state.unit = action.payload;
-    });
+    builder
+      .addCase(fetchUnit.fulfilled, (state, action) => {
+        state.unit = action.payload;
+      })
+      .addCase(addUnitFetch.fulfilled, (state, action) => {
+        state.unit = action.payload;
+      });
   },
 });
 

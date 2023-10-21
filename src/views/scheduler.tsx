@@ -18,25 +18,41 @@ import { UnitSchema } from "@/utils/schema";
 import UnitForm from "@/components/Forms/unitForm";
 import { Input } from "@/components/ui/input";
 import { useEffect } from "react";
+import { useAppDispatch } from "@/app/hooks";
+import { addUnitFetch } from "@/features/units/unitSlice";
 
 const Scheduler = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { currentDay, currentDays, currentDayIndex, setCurrentDay } =
     useGetCalenda();
   const currentScheduleDay = currentDays[currentDayIndex!];
   const dayParam = new Date(currentScheduleDay.date).toDateString();
-  const navigate = useNavigate();
-  const { units } = useGetUnitName(dayParam);
+  const { units, loading, setRefresh } = useGetUnitName(dayParam);
 
   // console.log(units);
 
-  const onSubmit = (data: z.infer<typeof UnitSchema>) => {
-    // const scheduleId = `sch_${dayParam}`;
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof UnitSchema>) => {
+    const scheduleId = `sch_${dayParam}`;
+    const { lead, name } = data;
+    const id = `uni_`;
+
+    try {
+      const data = await dispatch(
+        addUnitFetch({ id, name, lead, scheduleId })
+      ).unwrap();
+      
+      setRefresh(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     navigate(units && units?.length > 0 ? `${units[0]?.name}` : "");
-  }, [units]);
+  }, [units, loading, navigate]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="w-full h-full px-4">
