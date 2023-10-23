@@ -45,15 +45,16 @@ const scheduleSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchShifts.pending, (state) => {
-      state.isLoading = false;
-    })
-    .addCase(fetchShifts.fulfilled, (state, action) => {
+    builder
+      .addCase(fetchShifts.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchShifts.fulfilled, (state, action) => {
         state.shifts = action.payload;
-    })
-    .addCase(addShifts.fulfilled, (state, action) => {
-        state.shifts = [...state.shifts, action.payload]
-    })
+      })
+      .addCase(addShifts.fulfilled, (state, action) => {
+        state.shifts = [...state.shifts, action.payload];
+      });
   },
 });
 

@@ -12,41 +12,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Group, Shifts } from "@/utils/type";
 import ShiftCard from "@/components/shiftCard";
 import ShiftForm from "@/components/Forms/shiftForm";
 import { ShiftSchema } from "@/utils/schema";
-import { addShifts, fetchShifts } from "@/features/shifts/shiftSlice";
+import { addShifts } from "@/features/shifts/shiftSlice";
 import { z } from "zod";
 
 const WingView = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const units = useAppSelector((state: RootState) => state.unit.unit);
-  const shifts = useAppSelector((state: RootState) => state.shifts.shifts)
 
   // console.log(shifts)
-
-  const groupShift = (shifts: Shifts[]) => {
-    return shifts?.reduce((acc, shift) => {
-      if (acc[shift.name]) {
-        acc[shift.name] = {
-          ...acc[shift?.name],
-          employee: [...acc[shift.name].employee, ...shift.employee],
-        };
-      } else {
-        acc[shift?.name] = shift;
-      }
-
-      return acc;
-    }, {} as { [key: string]: Group });
-  };
 
   const onSubmit = (data: z.infer<typeof ShiftSchema>) => {
     const unitId = units.id;
     const { name, time } = data;
     try {
-      dispatch(addShifts({unitId, name, time,id: 'shi_'}))
+      dispatch(addShifts({ unitId, name, time, id: "shi_" }));
     } catch (error) {
       console.log(error);
     }
@@ -55,9 +38,7 @@ const WingView = () => {
   useEffect(() => {
     if (params.wingId === undefined) return;
     dispatch(fetchUnit(params.wingId!));
-
-    dispatch(fetchShifts(units.id))
-  }, [params, dispatch, units.id]);
+  }, [params, dispatch]);
 
   return (
     <div className="bg-slate-400 rounded-md p-4">
@@ -83,7 +64,22 @@ const WingView = () => {
         </div>
       ) : (
         <div className="">
-          <ShiftCard unit={groupShift(shifts)} />
+          <ShiftCard unit={units} />
+          <Dialog>
+            <DialogTrigger>
+              <Button className="bg-blue-400 flex px-4 py-1">
+                <Plus />
+                <p>New shift</p>
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create Shift/Position</DialogTitle>
+                <ShiftForm onSubmit={onSubmit} />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
     </div>

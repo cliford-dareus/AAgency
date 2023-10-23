@@ -14,8 +14,9 @@ export const addUnitFetch = createAsyncThunk(
   "unit/add",
   async (
     unit: { id: string; name: string; lead: string; scheduleId: string },
-    thunkApi
+    thunkApi,
   ) => {
+    thunkApi
     try {
       const res = await fetch("http://localhost:3000/api/v1/unit", {
         method: "POST",

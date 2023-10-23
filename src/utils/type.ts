@@ -18,6 +18,7 @@ export type Shifts = {
   name: string;
   time: string;
   employee: Employee[];
+  unitId: string;
 };
 
 export type Group = {
@@ -25,6 +26,7 @@ export type Group = {
   name: string;
   time: string;
   employee: Employee[];
+  unitId: string;
 };
 
 export type Employee = {

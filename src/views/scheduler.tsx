@@ -41,7 +41,7 @@ const Scheduler = () => {
       const data = await dispatch(
         addUnitFetch({ id, name, lead, scheduleId })
       ).unwrap();
-      
+
       setRefresh(data);
     } catch (error) {
       console.log(error);
@@ -50,7 +50,7 @@ const Scheduler = () => {
 
   useEffect(() => {
     navigate(units && units?.length > 0 ? `${units[0]?.name}` : "");
-  }, [units, loading, navigate]);
+  }, [units]);
 
   if (loading) return <div>Loading...</div>;
 
