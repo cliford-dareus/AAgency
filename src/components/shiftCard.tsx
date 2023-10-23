@@ -47,8 +47,11 @@ const ShiftCard = ({ unit }: Props) => {
 
           <div className="flex gap-4">
             {position.content.map((content) => (
-              <div className="w-[200px] bg-white px-4 py-2 rounded-sm mt-1">
-                <div key={content.id}>
+              <div
+                className="w-[200px] bg-white px-4 py-2 rounded-sm mt-1"
+                key={content.id}
+              >
+                <div>
                   <p className="text-center">
                     {content.name} {content.time}
                   </p>
