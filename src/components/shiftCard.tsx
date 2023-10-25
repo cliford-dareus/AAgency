@@ -7,7 +7,7 @@ import { fetchShifts } from "@/features/shifts/shiftSlice";
 import { useEffect } from "react";
 
 type Props = {
-  unit: Units;
+  unit: Units[];
 };
 
 const ShiftCard = ({ unit }: Props) => {
@@ -36,8 +36,8 @@ const ShiftCard = ({ unit }: Props) => {
   });
 
   useEffect(() => {
-    dispatch(fetchShifts(unit.id));
-  }, [unit.id]);
+    dispatch(fetchShifts(unit[0].id));
+  }, [unit[0].id]);
 
   return (
     <div className="">

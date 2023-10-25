@@ -13,15 +13,24 @@ export const fetchShifts = createAsyncThunk(
 export const addShifts = createAsyncThunk(
   "shift/add",
   async (
-    shift: { id: string; name: string; time: string; unitId: string },
+    shift: {
+      name: string;
+      time: string;
+      unitId: string;
+      boardName: string;
+      scheduleDate: string;
+    },
     thunkApi
   ) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/v1/shift`, {
-        method: "POST",
-        body: JSON.stringify(shift),
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/v1/shift?sch=${shift.scheduleDate}&boa=${shift.boardName}`,
+        {
+          method: "POST",
+          body: JSON.stringify(shift),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       const result = await res.json();
       return thunkApi.fulfillWithValue(result);
     } catch (error) {

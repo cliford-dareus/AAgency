@@ -41,7 +41,17 @@ const useGetCalenda = () => {
       return (currentDayIndex = index);
   });
 
-  return { currentDayIndex, currentDay, setCurrentDay, currentDays };
+  const currentScheduleDay = currentDays[currentDayIndex!];
+  const dayParam = new Date(currentScheduleDay.date).toDateString();
+
+  return {
+    currentDayIndex,
+    currentDay,
+    setCurrentDay,
+    currentDays,
+    dayParam,
+    currentScheduleDay,
+  };
 };
 
 export default useGetCalenda;

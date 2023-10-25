@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { fetchUnit } from "@/features/units/unitSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
@@ -21,28 +21,39 @@ import { z } from "zod";
 const WingView = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const scheduleDate = useOutletContext();
   const units = useAppSelector((state: RootState) => state.unit.unit);
 
-  // console.log(shifts)
-
   const onSubmit = (data: z.infer<typeof ShiftSchema>) => {
-    const unitId = units.id;
+    const unitId = units[0]?.id ?? '';
     const { name, time } = data;
     try {
-      dispatch(addShifts({ unitId, name, time, id: "shi_" }));
+      dispatch(
+        addShifts({
+          unitId,
+          name,
+          time,
+          scheduleDate: scheduleDate as string,
+          boardName: params.wingId!,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
   };
 
+  // console.log(units);
+
   useEffect(() => {
     if (params.wingId === undefined) return;
-    dispatch(fetchUnit(params.wingId!));
-  }, [params, dispatch]);
+    dispatch(
+      fetchUnit({ boardName: params.wingId, scheduleId: `sch_${scheduleDate}` })
+    );
+  }, [params, dispatch, scheduleDate]);
 
   return (
     <div className="bg-slate-400 rounded-md p-4">
-      {units.shifts && units?.shifts.length === 0 ? (
+      {units && units?.length === 0 ? (
         <div>
           <div>
             <Dialog>

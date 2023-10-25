@@ -3,9 +3,9 @@ import { Units } from "../../utils/type";
 
 export const fetchUnit = createAsyncThunk(
   "unit/fetch",
-  async (name: string) => {
-    const res = await fetch(`http://localhost:3000/api/v1/unit/${name}`);
-    const result = res.json();
+  async ({scheduleId, boardName}: {scheduleId: string, boardName: string}) => {
+    const res = await fetch(`http://localhost:3000/api/v1/unit?boardname=${boardName}&sch_id=${scheduleId}`);
+    const result = await res.json();
     return result;
   }
 );
@@ -13,7 +13,7 @@ export const fetchUnit = createAsyncThunk(
 export const addUnitFetch = createAsyncThunk(
   "unit/add",
   async (
-    unit: { id: string; name: string; lead: string; scheduleId: string },
+    unit: { boardName: string; lead: string; scheduleDate: string, description: string},
     thunkApi,
   ) => {
     thunkApi
@@ -32,16 +32,11 @@ export const addUnitFetch = createAsyncThunk(
 );
 
 interface UnitState {
-  unit: Units;
+  unit: Units[];
 }
 
 const initialState = {
-  unit: {
-    id: "",
-    name: "",
-    lead: "",
-    shifts: [],
-  },
+  unit: [],
 } as UnitState;
 
 const unitSlice = createSlice({
@@ -51,6 +46,7 @@ const unitSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUnit.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.unit = action.payload;
       })
       .addCase(addUnitFetch.fulfilled, (state, action) => {

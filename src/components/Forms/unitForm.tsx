@@ -35,10 +35,10 @@ const UnitForm = ({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="name"
+          name="boardName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Unit Name</FormLabel>
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
@@ -52,7 +52,7 @@ const UnitForm = ({
           name="lead"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Lead</FormLabel>
+              <FormLabel>Unit Lead</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>

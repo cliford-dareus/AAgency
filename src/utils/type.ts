@@ -40,3 +40,8 @@ export type User = {
   id: string;
   name: string;
 }
+
+export type Board = {
+  id: string;
+  name: string;
+}
