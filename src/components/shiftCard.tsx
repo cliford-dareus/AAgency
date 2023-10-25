@@ -37,10 +37,11 @@ const ShiftCard = ({ unit }: Props) => {
 
   useEffect(() => {
     dispatch(fetchShifts(unit[0].id));
-  }, [unit[0].id]);
+  }, [unit, dispatch]);
 
   return (
     <div className="">
+
       {positions.map((position) => (
         <div className="mb-4" key={position.title}>
           <p className="font-bold">{position.title}</p>

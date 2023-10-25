@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-import { Plus } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import { fetchUnit } from "@/features/units/unitSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
@@ -25,7 +25,7 @@ const WingView = () => {
   const units = useAppSelector((state: RootState) => state.unit.unit);
 
   const onSubmit = (data: z.infer<typeof ShiftSchema>) => {
-    const unitId = units[0]?.id ?? '';
+    const unitId = units[0]?.id ?? "";
     const { name, time } = data;
     try {
       dispatch(
@@ -75,6 +75,11 @@ const WingView = () => {
         </div>
       ) : (
         <div className="">
+          <div className="flex gap-4 items-center">
+            <p>Lead Nurse : {units[0].lead}</p>
+            <Pencil size={16}/>
+          </div>
+
           <ShiftCard unit={units} />
           <Dialog>
             <DialogTrigger>

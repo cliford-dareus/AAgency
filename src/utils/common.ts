@@ -1,4 +1,5 @@
 export const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 export const months = [
   "January",
   "February",
@@ -13,3 +14,5 @@ export const months = [
   "November",
   "December",
 ];
+
+export const API_URL = "http://localhost:3000/api/v1";

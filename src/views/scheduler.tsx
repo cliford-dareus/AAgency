@@ -1,7 +1,7 @@
 import { months } from "../utils/common";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import useGetCalenda from "../utils/hooks/useGetCalenda";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Settings } from "lucide-react";
 
 import * as z from "zod";
 import { UnitSchema } from "@/utils/schema";
@@ -10,7 +10,15 @@ import { useAppDispatch } from "@/app/hooks";
 import { addUnitFetch } from "@/features/units/unitSlice";
 import NavHeader from "@/components/layouts/header";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import UnitEditForm from "@/components/Forms/unitEditForm";
+
 const Scheduler = () => {
+  const params = useParams()
   const dispatch = useAppDispatch();
   const { currentDay, setCurrentDay, dayParam, currentScheduleDay } =
     useGetCalenda();
@@ -94,8 +102,19 @@ const Scheduler = () => {
           <NavHeader onSubmit={onSubmit} dayParam={dayParam} />
 
           <div className="">
-            <h2 className="mt-4">SHIFT/POSITION</h2>
-            <Outlet context={dayParam}/>
+            <div className="my-4 flex justify-between">
+              <h2 className="font-bold">SHIFT/POSITION</h2>
+              <Popover>
+                <PopoverTrigger>
+                  <Settings />
+                </PopoverTrigger>
+                <PopoverContent align='end'>
+                  <h2 className="font-bold">Edit {params.wingId}</h2>
+                  <UnitEditForm scheduleDate={dayParam} unit={params.wingId!}/>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <Outlet context={dayParam} />
           </div>
         </div>
       </div>
