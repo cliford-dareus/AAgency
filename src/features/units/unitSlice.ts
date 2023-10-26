@@ -93,8 +93,10 @@ const unitSlice = createSlice({
         state.unit = action.payload;
       })
       .addCase(updateUnitFetch.fulfilled, (state, action) => {
-        state.unit[0].lead = action.payload.lead;
-      })
+        if (action.payload.lead) {
+          state.unit[0].lead = action.payload.lead;
+        }
+      });
   },
 });
 

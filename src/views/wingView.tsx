@@ -17,6 +17,7 @@ import ShiftForm from "@/components/Forms/shiftForm";
 import { ShiftSchema } from "@/utils/schema";
 import { addShifts } from "@/features/shifts/shiftSlice";
 import { z } from "zod";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const WingView = () => {
   const params = useParams();
@@ -52,7 +53,7 @@ const WingView = () => {
   }, [params, dispatch, scheduleDate]);
 
   return (
-    <div className="bg-slate-400 rounded-md p-4">
+    <ScrollArea className="h-[calc(100vh-299px)] bg-slate-400 rounded-md p-4 ">
       {units && units?.length === 0 ? (
         <div>
           <div>
@@ -76,11 +77,14 @@ const WingView = () => {
       ) : (
         <div className="">
           <div className="flex gap-4 items-center">
-            <p>Lead Nurse : {units[0].lead}</p>
-            <Pencil size={16}/>
+            <p className="font-bold">
+              Lead Nurse : <span className="font-normal">{units[0].lead}</span>{" "}
+            </p>
+            <Pencil size={16} />
           </div>
 
           <ShiftCard unit={units} />
+
           <Dialog>
             <DialogTrigger>
               <Button className="bg-blue-400 flex px-4 py-1">
@@ -98,7 +102,8 @@ const WingView = () => {
           </Dialog>
         </div>
       )}
-    </div>
+      <ScrollBar className="" />
+    </ScrollArea>
   );
 };
 

@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom";
+import Sidebar from "./sidebar";
 
 const Root = () => {
   return (
     <div className="w-screen h-screen flex">
       <aside className="w-[256px] h-full bg-black rounded-tr-2xl">
-        aside
+        <Sidebar />
       </aside>
 
-      <main className="flex-1">
+      <main className="flex-1 overflow-hidden">
         <Outlet />
       </main>
     </div>
