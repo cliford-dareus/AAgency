@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./components/layouts/Root";
 import Scheduler from "./views/scheduler";
-import WingView from "./views/wingView";
+import WingView from "./views/unitView";
 
 function App() {
   const router = createBrowserRouter([

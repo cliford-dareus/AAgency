@@ -55,32 +55,32 @@ const WingView = () => {
   return (
     <ScrollArea className="h-[calc(100vh-299px)] bg-slate-400 rounded-md p-4 ">
       {units && units?.length === 0 ? (
-        <div>
-          <div>
-            <Dialog>
-              <DialogTrigger>
-                <Button className="bg-blue-400 flex px-4 py-1">
-                  <Plus />
-                  <p>New shift</p>
-                </Button>
-              </DialogTrigger>
+        <div className="">
+          <Dialog>
+            <DialogTrigger>
+              <Button className="bg-blue-400 flex px-4 py-1">
+                <Plus />
+                <p>New shift</p>
+              </Button>
+            </DialogTrigger>
 
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Create Shift/Position</DialogTitle>
-                  <ShiftForm onSubmit={onSubmit} />
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
-          </div>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create Shift/Position</DialogTitle>
+                <ShiftForm onSubmit={onSubmit} />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       ) : (
         <div className="">
           <div className="flex gap-4 items-center">
             <p className="font-bold">
-              Lead Nurse : <span className="font-normal">{units[0].lead}</span>{" "}
+              Lead Nurse : <span className="font-normal">{units && units[0].lead}</span>{" "}
             </p>
-            <Pencil size={16} />
+            <div className="">
+              <Pencil size={16} />
+            </div>
           </div>
 
           <ShiftCard unit={units} />

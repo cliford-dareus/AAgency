@@ -2,12 +2,20 @@ import useGetCalenda from "@/utils/hooks/useGetCalenda";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { months } from "@/utils/common";
+import { useEffect } from "react";
 
-type Props = {}
+type Props = {
+  setDayParam: (dayParam: string) => void;
+};
 
-const TopBar = (props: Props) => {
-     const { currentDay, setCurrentDay, currentScheduleDay } =
-       useGetCalenda();
+const TopBar = ({ setDayParam }: Props) => {
+  const { currentDay, setCurrentDay, currentScheduleDay, dayParam } =
+    useGetCalenda();
+
+  useEffect(() => {
+    setDayParam(dayParam);
+  }, [dayParam]);
+  
   return (
     <div className="flex h-[35px] items-center mt-8">
       <div className="w-[350px] bg-slate-400 flex rounded-full h-full items-center px-4">
@@ -61,6 +69,6 @@ const TopBar = (props: Props) => {
       </div>
     </div>
   );
-}
+};
 
-export default TopBar
+export default TopBar;

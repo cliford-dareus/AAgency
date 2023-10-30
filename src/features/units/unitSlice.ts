@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Units } from "../../utils/type";
 import { API_URL } from "@/utils/common";
+import { fetchBoard } from "../board/boardSlice";
 
 export const fetchUnit = createAsyncThunk(
   "unit/fetch",
@@ -37,6 +38,7 @@ export const addUnitFetch = createAsyncThunk(
         body: JSON.stringify(unit),
         headers: { "Content-Type": "application/json" },
       });
+      thunkApi.dispatch(fetchBoard())
       const result = await res.json();
       return thunkApi.fulfillWithValue(result);
     } catch (error) {
@@ -90,7 +92,7 @@ const unitSlice = createSlice({
         state.unit = action.payload;
       })
       .addCase(addUnitFetch.fulfilled, (state, action) => {
-        state.unit = action.payload;
+        state.unit = [...state.unit, action.payload];
       })
       .addCase(updateUnitFetch.fulfilled, (state, action) => {
         if (action.payload.lead) {

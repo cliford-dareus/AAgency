@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -41,14 +41,25 @@ const NavHeader = ({ onSubmit, dayParam }: Props) => {
 
   return (
     <div>
-      <div className="flex mt-4 border-b items-center pb-4">
-        <ul className="flex">
+      <div className="flex mt-4 border-b items-center h-[40px]">
+        <ul className="flex h-full items-center">
           {board.board?.map((unit) => (
             <li
               key={unit.name}
-              className="px-8 border-r border-slate-500 font-semibold"
+              className="border-r border-slate-500 font-semibold h-full flex items-center"
             >
-              <Link to={unit.name}>{unit.name}</Link>
+              <NavLink
+                className={({ isActive }) =>
+                  [
+                    isActive
+                      ? "border-b-2 border-b-blue-500 h-full w-full px-8 flex items-center"
+                      : "h-full px-8 flex items-center",
+                  ].join(" ")
+                }
+                to={unit.name}
+              >
+                {unit.name}
+              </NavLink>
             </li>
           ))}
         </ul>
