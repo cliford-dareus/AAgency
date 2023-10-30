@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
 import { RootState } from "@/app/store";
 import { Group, Shifts, Units } from "@/utils/type";
-import { fetchShifts } from "@/features/shifts/shiftSlice";
+import { addShifts, fetchShifts } from "@/features/shifts/shiftSlice";
 import { useEffect } from "react";
 import {
   Card,
@@ -12,14 +12,34 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { z } from "zod";
+import { ShiftSchema } from "@/utils/schema";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   unit: Units[];
+  scheduleDate: string;
+  boardName: string;
 };
 
-const ShiftCard = ({ unit }: Props) => {
+const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
   const dispatch = useAppDispatch();
   const shifts = useAppSelector((state: RootState) => state.shifts.shifts);
+
+  const form = useForm<z.infer<typeof ShiftSchema>>({
+    resolver: zodResolver(ShiftSchema),
+  });
 
   // Group the shifts by position
   const groupShift = (args: Shifts[]) => {
@@ -42,6 +62,24 @@ const ShiftCard = ({ unit }: Props) => {
 
     return singleItem;
   });
+
+  const onSubmit = (data: z.infer<typeof ShiftSchema>) => {
+    const unitId = unit[0]?.id ?? "";
+    const { name, time } = data;
+    try {
+      dispatch(
+        addShifts({
+          unitId,
+          name,
+          time,
+          scheduleDate: scheduleDate as string,
+          boardName,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchShifts(unit[0].id));
@@ -73,28 +111,55 @@ const ShiftCard = ({ unit }: Props) => {
                   </Button>
                 </CardFooter>
               </Card>
-
-              // <div
-              //   className="w-[200px] bg-white px-4 py-2 rounded-sm mt-1"
-              //   key={content.id}
-              // >
-              //   <div>
-              //     <p className="text-center">
-              //       {content.name} {content.time}
-              //     </p>
-              //     {content.employee?.map((employee) => (
-              //       <p key={employee.id}>{employee.user.name}</p>
-              //     ))}
-              //   </div>
-              //   <Button>
-              //     <Plus />
-              //   </Button>
-              // </div>
             ))}
 
             {/* Add new shift to specific position */}
             <div className="mt-1">
-              <Button className="bg-[#D2D635]">New Shift</Button>
+              <Popover>
+                <PopoverTrigger>
+                  <Button className="bg-[#D2D635]">New Shift</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <h2 className="font-bold">
+                    Add New Shift to {position.title}
+                  </h2>
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-6"
+                    >
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Supervisor" {...field} defaultValue={position.title}/>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="time"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Time</FormLabel>
+                            <FormControl>
+                              <Input placeholder="7-3" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="submit">Submit</Button>
+                    </form>
+                  </Form>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </div>

@@ -47,9 +47,12 @@ const WingView = () => {
 
   useEffect(() => {
     if (params.wingId === undefined) return;
-    dispatch(
+    const promise = dispatch(
       fetchUnit({ boardName: params.wingId, scheduleId: `sch_${scheduleDate}` })
     );
+    return () => {
+      promise.abort();
+    };
   }, [params, dispatch, scheduleDate]);
 
   return (
@@ -76,14 +79,19 @@ const WingView = () => {
         <div className="">
           <div className="flex gap-4 items-center">
             <p className="font-bold">
-              Lead Nurse : <span className="font-normal">{units && units[0].lead}</span>{" "}
+              Lead Nurse :{" "}
+              <span className="font-normal">{units && units[0].lead}</span>{" "}
             </p>
             <div className="">
               <Pencil size={16} />
             </div>
           </div>
 
-          <ShiftCard unit={units} />
+          <ShiftCard
+            unit={units}
+            scheduleDate={scheduleDate as string}
+            boardName={params.wingId as string}
+          />
 
           <Dialog>
             <DialogTrigger>

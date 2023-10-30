@@ -5,15 +5,19 @@ import { fetchBoard } from "../board/boardSlice";
 
 export const fetchUnit = createAsyncThunk(
   "unit/fetch",
-  async ({
-    scheduleId,
-    boardName,
-  }: {
-    scheduleId: string;
-    boardName: string;
-  }) => {
+  async (
+    {
+      scheduleId,
+      boardName,
+    }: {
+      scheduleId: string;
+      boardName: string;
+    },
+    thunkApi
+  ) => {
     const res = await fetch(
-      `${API_URL}/unit?boardname=${boardName}&sch_id=${scheduleId}`
+      `${API_URL}/unit?boardname=${boardName}&sch_id=${scheduleId}`,
+      { signal: thunkApi.signal }
     );
     const result = await res.json();
     return result;
@@ -38,7 +42,7 @@ export const addUnitFetch = createAsyncThunk(
         body: JSON.stringify(unit),
         headers: { "Content-Type": "application/json" },
       });
-      thunkApi.dispatch(fetchBoard())
+      thunkApi.dispatch(fetchBoard());
       const result = await res.json();
       return thunkApi.fulfillWithValue(result);
     } catch (error) {
