@@ -41,12 +41,12 @@ export const addShifts = createAsyncThunk(
 
 interface ShiftState {
   shifts: Shifts[];
-  isLoading: boolean;
+  Loading: boolean;
 }
 
 const initialState = {
   shifts: [],
-  isLoading: true,
+  Loading: true,
 } as ShiftState;
 
 const scheduleSlice = createSlice({
@@ -56,12 +56,17 @@ const scheduleSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchShifts.pending, (state) => {
-        state.isLoading = false;
+        state.Loading = true;
       })
       .addCase(fetchShifts.fulfilled, (state, action) => {
+        state.Loading = false;
         state.shifts = action.payload;
       })
+      .addCase(addShifts.pending, (state) => {
+        state.Loading = true;
+      })
       .addCase(addShifts.fulfilled, (state, action) => {
+        state.Loading = false;
         state.shifts = [...state.shifts, action.payload];
       });
   },

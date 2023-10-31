@@ -61,7 +61,7 @@ const WingView = () => {
         <div className="">
           <Dialog>
             <DialogTrigger>
-              <Button className="bg-blue-400 flex px-4 py-1">
+              <Button className="bg-blue-400 flex px-4">
                 <Plus />
                 <p>New shift</p>
               </Button>
@@ -95,7 +95,7 @@ const WingView = () => {
 
           <Dialog>
             <DialogTrigger>
-              <Button className="bg-blue-400 flex px-4 py-1">
+              <Button className="bg-blue-400 flex px-4">
                 <Plus />
                 <p>New shift</p>
               </Button>

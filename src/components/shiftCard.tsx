@@ -96,7 +96,7 @@ const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
               // TODO: create a new Cards component
               <Card className="w-[250px]" key={content.id}>
                 <CardHeader>
-                  <CardTitle className="text-base self-center">
+                  <CardTitle className="text-base self-center font-normal">
                     {content.name} {content.time}
                   </CardTitle>
                 </CardHeader>
@@ -114,10 +114,10 @@ const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
             ))}
 
             {/* Add new shift to specific position */}
-            <div className="mt-1">
+            <div className="">
               <Popover>
                 <PopoverTrigger>
-                  <Button className="bg-[#D2D635]">New Shift</Button>
+                  <Button className="bg-[#D2D635] w-[250px]">New Shift</Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <h2 className="font-bold">
@@ -135,7 +135,11 @@ const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
                           <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="Supervisor" {...field} defaultValue={position.title}/>
+                              <Input
+                                placeholder="Supervisor"
+                                {...field}
+                                defaultValue={position.title}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

@@ -47,9 +47,9 @@ const Scheduler = () => {
           <NavHeader onSubmit={onSubmit} dayParam={dayParam} />
 
           <div className="">
-            <div className="my-4 flex justify-between">
+            <div className="my-4">
               <h2 className="font-bold">SHIFT/POSITION</h2>
-              <Popover>
+              {/* <Popover>
                 <PopoverTrigger>
                   <Settings />
                 </PopoverTrigger>
@@ -57,7 +57,7 @@ const Scheduler = () => {
                   <h2 className="font-bold">Edit {params.wingId}</h2>
                   <UnitEditForm scheduleDate={dayParam} unit={params.wingId!} />
                 </PopoverContent>
-              </Popover>
+              </Popover> */}
             </div>
             <Outlet context={dayParam} />
           </div>

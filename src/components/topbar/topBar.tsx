@@ -15,10 +15,10 @@ const TopBar = ({ setDayParam }: Props) => {
   useEffect(() => {
     setDayParam(dayParam);
   }, [dayParam]);
-  
+
   return (
     <div className="flex h-[35px] items-center mt-8">
-      <div className="w-[350px] bg-slate-400 flex rounded-full h-full items-center px-4">
+      <div className="w-[400px] bg-slate-400 flex rounded-full h-full items-center px-4">
         <Search />
         <Input
           className="bg-transparent h-full flex-1 placeholder:text-white px-4 outline-none border-none"
@@ -64,7 +64,7 @@ const TopBar = ({ setDayParam }: Props) => {
         </div>
       </div>
 
-      <div className="bg-slate-400 flex rounded-full h-full items-center px-4 ml-auto">
+      <div className="bg-slate-400 flex rounded-full h-full items-center px-8 ml-auto">
         Profile
       </div>
     </div>

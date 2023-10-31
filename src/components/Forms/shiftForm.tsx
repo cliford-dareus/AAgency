@@ -33,7 +33,7 @@ const ShiftForm = ({ onSubmit }: Props) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Nurses" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -45,9 +45,9 @@ const ShiftForm = ({ onSubmit }: Props) => {
           name="time"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Time</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="7-3" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
