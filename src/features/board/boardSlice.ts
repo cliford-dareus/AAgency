@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Board } from "../../utils/type";
-import { updateUnitFetch } from "../units/unitSlice";
 import { API_URL } from "@/utils/common";
 
 export const fetchBoard = createAsyncThunk("board/fetch", async () => {
   const res = await fetch(`${API_URL}/board`);
-  const result = res.json();
+  const result = await res.json();
   return result;
 });
+
+export const createBoard = createAsyncThunk("board/create", async () => {});
 
 export const updateBoard = createAsyncThunk(
   "board/update",
@@ -64,24 +65,24 @@ const boardSlice = createSlice({
         state.board = action.payload;
         state.Loading = false;
       })
-      .addCase(updateUnitFetch.fulfilled, (state, action) => {
-        if (action.payload.name) {
-          const stateToUp = state.board.filter(
-            (board) => board.id !== action.payload.id
-          );
-          state.board = [...stateToUp, action.payload];
-        }
-      })
       .addCase(updateBoard.pending, (state) => {
         state.Loading = true;
       })
       .addCase(updateBoard.fulfilled, (state, action) => {
         state.Loading = false;
-
         const stateToUp = state.board.filter(
           (board) => board.id !== action.payload.id
         );
         state.board = [...stateToUp, action.payload];
+      })
+      .addCase(deleteBoard.pending, (state) => {
+        state.Loading = true;
+      })
+      .addCase(deleteBoard.fulfilled, (state, action) => {
+        state.Loading = false;
+        state.board = state.board.filter(
+          (board) => board.name !== action.payload.name
+        );
       });
   },
 });

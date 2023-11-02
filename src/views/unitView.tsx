@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { Pencil, Plus } from "lucide-react";
-import { fetchUnit } from "@/features/units/unitSlice";
+import { fetchUnit, updateUnitFetch } from "@/features/units/unitSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
 import {
@@ -18,7 +18,11 @@ import { ShiftSchema } from "@/utils/schema";
 import { addShifts } from "@/features/shifts/shiftSlice";
 import { z } from "zod";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 
 const WingView = () => {
@@ -26,6 +30,7 @@ const WingView = () => {
   const dispatch = useAppDispatch();
   const scheduleDate = useOutletContext();
   const units = useAppSelector((state: RootState) => state.unit.unit);
+  const [value, setValue] = useState("");
 
   const onSubmit = (data: z.infer<typeof ShiftSchema>) => {
     const unitId = units[0]?.id ?? "";
@@ -43,6 +48,17 @@ const WingView = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const onSubmits = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(
+      updateUnitFetch({
+        boardname: params.wingId as string,
+        sch_id: scheduleDate as string,
+        newLead: value,
+      })
+    );
   };
 
   // console.log(units);
@@ -92,8 +108,11 @@ const WingView = () => {
               <PopoverContent>
                 <h3>Change the lead name</h3>
                 <div>
-                  <form action="">
-                    <Input />
+                  <form onSubmit={onSubmits}>
+                    <Input
+                      defaultValue={units[0].lead}
+                      onChange={(e) => setValue(e.target.value)}
+                    />
                   </form>
                 </div>
               </PopoverContent>

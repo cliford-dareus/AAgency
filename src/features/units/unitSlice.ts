@@ -56,7 +56,6 @@ export const updateUnitFetch = createAsyncThunk(
   async (
     input: {
       newLead: string;
-      newUnitName: string;
       sch_id: string;
       boardname: string;
     },

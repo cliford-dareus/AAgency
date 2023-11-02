@@ -13,7 +13,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "@/app/hooks";
-import { fetchBoard, updateBoard } from "@/features/board/boardSlice";
+import {
+  deleteBoard,
+  fetchBoard,
+  updateBoard,
+} from "@/features/board/boardSlice";
 import { z } from "zod";
 import { UnitSchema } from "@/utils/schema";
 import { DialogDescription } from "@radix-ui/react-dialog";
@@ -82,7 +86,7 @@ const NavHeader = ({ onSubmit, dayParam }: Props) => {
 
         <div className="flex gap-4 items-center ml-auto">
           <Link to={`/view?boa=${currentBoard?.name}&sch=${dayParam}`}>
-            <Maximize2 size={17}/>
+            <Maximize2 size={17} />
           </Link>
           <Popover>
             <PopoverTrigger>
@@ -91,7 +95,7 @@ const NavHeader = ({ onSubmit, dayParam }: Props) => {
             <PopoverContent>
               <h2>Unit Options</h2>
 
-              <div className="">
+              <div className="flex flex-col gap-2">
                 <div className="flex gap-2 items-center mt-4">
                   <BookMarkedIcon />
                   <form onSubmit={onSubmits}>
@@ -102,7 +106,15 @@ const NavHeader = ({ onSubmit, dayParam }: Props) => {
                     />
                   </form>
                 </div>
-                <div className="flex">Delete Unit</div>
+
+                <div
+                  className="flex"
+                  onClick={() =>
+                    dispatch(deleteBoard(currentBoard?.id as string))
+                  }
+                >
+                  Delete Unit
+                </div>
               </div>
             </PopoverContent>
           </Popover>
