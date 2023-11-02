@@ -34,14 +34,16 @@ export type Employee = {
   shiftId: string;
   userId: string;
   user: User;
-}
+};
 
 export type User = {
   id: string;
   name: string;
-}
+  email: string;
+  position: string;
+};
 
 export type Board = {
   id: string;
   name: string;
-}
+};

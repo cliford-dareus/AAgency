@@ -13,8 +13,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import UnitEditForm from "@/components/Forms/unitEditForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopBar from "@/components/topbar/topBar";
+import { fetchUsers } from "@/features/user/userSlice";
 
 const Scheduler = () => {
   const params = useParams();
@@ -33,6 +34,10 @@ const Scheduler = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
 
   return (
     <div className="w-full h-full px-4">

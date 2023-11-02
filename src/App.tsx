@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./components/layouts/Root";
 import Scheduler from "./views/scheduler";
 import WingView from "./views/unitView";
+import SingleView from "./views/singleView";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
             },
           ],
         },
+        {
+          path: ':wingId',
+          element: <SingleView />
+        }
       ],
     },
   ]);

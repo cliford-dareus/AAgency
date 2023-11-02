@@ -1,5 +1,5 @@
-import { BookMarkedIcon, MoreHorizontal, Plus } from "lucide-react";
-import { useNavigate, NavLink, useParams } from "react-router-dom";
+import { BookMarkedIcon, Maximize2, MoreHorizontal, Plus } from "lucide-react";
+import { useNavigate, NavLink, useParams, Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -75,10 +75,15 @@ const NavHeader = ({ onSubmit, dayParam }: Props) => {
             </li>
           ))}
         </ul>
+        {/* Create New Board or Unit */}
+        <div className="ml-4">
+          <Plus />
+        </div>
 
-        {/* <Plus /> */}
-
-        <div className="flex gap-8 items-center ml-auto">
+        <div className="flex gap-4 items-center ml-auto">
+          <Link to={`/view?boa=${currentBoard?.name}&sch=${dayParam}`}>
+            <Maximize2 size={17}/>
+          </Link>
           <Popover>
             <PopoverTrigger>
               <MoreHorizontal />
@@ -97,9 +102,7 @@ const NavHeader = ({ onSubmit, dayParam }: Props) => {
                     />
                   </form>
                 </div>
-                <div className="flex">
-                  Delete Unit
-                </div>
+                <div className="flex">Delete Unit</div>
               </div>
             </PopoverContent>
           </Popover>

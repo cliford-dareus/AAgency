@@ -16,6 +16,7 @@ export const updateBoard = createAsyncThunk(
       const res = await fetch(`${API_URL}/board`, {
         method: "PUT",
         body: JSON.stringify({ id: id, newName: newName }),
+        headers: { "Content-Type": "application/json" },
       });
       const result = await res.json();
       return result;
@@ -76,7 +77,11 @@ const boardSlice = createSlice({
       })
       .addCase(updateBoard.fulfilled, (state, action) => {
         state.Loading = false;
-        state.board = [...state.board, action.payload];
+
+        const stateToUp = state.board.filter(
+          (board) => board.id !== action.payload.id
+        );
+        state.board = [...stateToUp, action.payload];
       });
   },
 });

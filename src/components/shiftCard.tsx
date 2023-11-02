@@ -1,20 +1,13 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { Button } from "./ui/button";
-import { Plus } from "lucide-react";
-import { RootState } from "@/app/store";
-import { Group, Shifts, Units } from "@/utils/type";
-import { addShifts, fetchShifts } from "@/features/shifts/shiftSlice";
-import { useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { z } from "zod";
+import { useEffect } from "react";
+import { Button } from "./ui/button";
+import { RootState } from "@/app/store";
 import { ShiftSchema } from "@/utils/schema";
+import { Group, Shifts, Units } from "@/utils/type";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { addShifts, fetchShifts } from "@/features/shifts/shiftSlice";
+
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import {
   Form,
   FormControl,
@@ -26,6 +19,7 @@ import {
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import CardComponent from "./card";
 
 type Props = {
   unit: Units[];
@@ -93,24 +87,7 @@ const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
 
           <div className="flex gap-4">
             {position.content.map((content) => (
-              // TODO: create a new Cards component
-              <Card className="w-[250px]" key={content.id}>
-                <CardHeader>
-                  <CardTitle className="text-base self-center font-normal">
-                    {content.name} {content.time}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {content.employee?.map((employee) => (
-                    <p key={employee.id}>{employee.user.name}</p>
-                  ))}
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full">
-                    <Plus />
-                  </Button>
-                </CardFooter>
-              </Card>
+              <CardComponent key={content.id} content={content} />
             ))}
 
             {/* Add new shift to specific position */}

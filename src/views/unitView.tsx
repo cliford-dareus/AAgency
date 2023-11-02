@@ -18,6 +18,8 @@ import { ShiftSchema } from "@/utils/schema";
 import { addShifts } from "@/features/shifts/shiftSlice";
 import { z } from "zod";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
 
 const WingView = () => {
   const params = useParams();
@@ -80,11 +82,22 @@ const WingView = () => {
           <div className="flex gap-4 items-center">
             <p className="font-bold">
               Lead Nurse :{" "}
-              <span className="font-normal">{units && units[0].lead}</span>{" "}
+              <span className="font-normal ml-2">{units && units[0].lead}</span>{" "}
             </p>
-            <div className="">
-              <Pencil size={16} />
-            </div>
+
+            <Popover>
+              <PopoverTrigger>
+                <Pencil size={16} />
+              </PopoverTrigger>
+              <PopoverContent>
+                <h3>Change the lead name</h3>
+                <div>
+                  <form action="">
+                    <Input />
+                  </form>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
 
           <ShiftCard
