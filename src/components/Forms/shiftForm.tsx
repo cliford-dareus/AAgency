@@ -13,12 +13,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../ui/button";
+import { Group } from "@/utils/type";
 
 type Props = {
   onSubmit: (data: z.infer<typeof ShiftSchema>) => void;
+  position?: {
+    title: string;
+    content: Group[];
+  };
 };
 
-const ShiftForm = ({ onSubmit }: Props) => {
+const ShiftForm = ({ onSubmit, position }: Props) => {
   const form = useForm<z.infer<typeof ShiftSchema>>({
     resolver: zodResolver(ShiftSchema),
   });
@@ -33,7 +38,11 @@ const ShiftForm = ({ onSubmit }: Props) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Nurses" {...field} />
+                <Input
+                  placeholder="Nurses"
+                  {...field}
+                  defaultValue={position && position.title}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

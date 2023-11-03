@@ -47,3 +47,9 @@ export type Board = {
   id: string;
   name: string;
 };
+
+export type EmployeePayload = {
+  userId: string;
+  shiftId: string;
+  scheduleId: string;
+};

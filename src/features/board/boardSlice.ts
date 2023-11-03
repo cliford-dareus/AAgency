@@ -8,7 +8,19 @@ export const fetchBoard = createAsyncThunk("board/fetch", async () => {
   return result;
 });
 
-export const createBoard = createAsyncThunk("board/create", async () => {});
+export const createBoard = createAsyncThunk(
+  "board/create",
+  async (name: string) => {
+    const res = await fetch(`${API_URL}/board`, {
+      method: "POST",
+      body: JSON.stringify({ name }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await res.json();
+    return result;
+  }
+);
 
 export const updateBoard = createAsyncThunk(
   "board/update",
@@ -64,6 +76,13 @@ const boardSlice = createSlice({
       .addCase(fetchBoard.fulfilled, (state, action) => {
         state.board = action.payload;
         state.Loading = false;
+      })
+      .addCase(createBoard.pending, (state) => {
+        state.Loading = true;
+      })
+      .addCase(createBoard.fulfilled, (state, action) => {
+        state.Loading = false;
+        state.board = [...state.board, action.payload];
       })
       .addCase(updateBoard.pending, (state) => {
         state.Loading = true;

@@ -8,18 +8,8 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { addShifts, fetchShifts } from "@/features/shifts/shiftSlice";
 
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import CardComponent from "./card";
+import ShiftForm from "./Forms/shiftForm";
 
 type Props = {
   unit: Units[];
@@ -30,10 +20,6 @@ type Props = {
 const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
   const dispatch = useAppDispatch();
   const shifts = useAppSelector((state: RootState) => state.shifts.shifts);
-
-  const form = useForm<z.infer<typeof ShiftSchema>>({
-    resolver: zodResolver(ShiftSchema),
-  });
 
   // Group the shifts by position
   const groupShift = (args: Shifts[]) => {
@@ -85,9 +71,13 @@ const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
         <div className="mb-4" key={position.title}>
           <p className="font-bold">{position.title}</p>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-start mt-2">
             {position.content.map((content) => (
-              <CardComponent key={content.id} content={content} />
+              <CardComponent
+                key={content.id}
+                content={content}
+                scheduleDate={scheduleDate}
+              />
             ))}
 
             {/* Add new shift to specific position */}
@@ -100,45 +90,7 @@ const ShiftCard = ({ unit, scheduleDate, boardName }: Props) => {
                   <h2 className="font-bold">
                     Add New Shift to {position.title}
                   </h2>
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(onSubmit)}
-                      className="space-y-6"
-                    >
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Supervisor"
-                                {...field}
-                                defaultValue={position.title}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="time"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Time</FormLabel>
-                            <FormControl>
-                              <Input placeholder="7-3" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <Button type="submit">Submit</Button>
-                    </form>
-                  </Form>
+                  <ShiftForm onSubmit={onSubmit} position={position} />
                 </PopoverContent>
               </Popover>
             </div>
