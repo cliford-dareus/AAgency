@@ -25,10 +25,10 @@ export const addEmployeeToShift = createAsyncThunk(
   }
 );
 
-export const removeEmployeeFromShift = createAsyncThunk(
-  "employee/remove",
-  async ({ employeeId }) => {}
-);
+// export const removeEmployeeFromShift = createAsyncThunk(
+//   "employee/remove",
+//   async ({ employeeId }) => {}
+// );
 
 interface EmployeeState {
   employee: Employee[];

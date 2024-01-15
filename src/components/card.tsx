@@ -22,7 +22,7 @@ type Props = {
 const CardComponent = ({ content, scheduleDate }: Props) => {
   const dispatch = useAppDispatch();
   const users = useAppSelector((state: RootState) => state.user);
-  console.log(scheduleDate);
+  // console.log(scheduleDate);
 
   return (
     <Card className="w-[250px] rounded-sm">
