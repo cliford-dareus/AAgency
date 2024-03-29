@@ -1,6 +1,6 @@
-import Sidebar from "./sidebar/sidebar";
+import Sidebar from "../../features/Interface-controls/sidebar/sidebar";
 import { Outlet } from "react-router-dom";
-import Sidebarlinks from "./sidebar/sidebarlinks";
+import Sidebarlinks from "../../features/Interface-controls/sidebar/sidebarlinks";
 import {
   LucideLayoutDashboard,
 } from "lucide-react";

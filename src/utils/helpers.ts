@@ -55,3 +55,10 @@ export const getSortedDays = (currentDate: Date) => {
 
 export const hourNow = new Date().getHours();
 export const minuteNow = new Date().getMinutes();
+
+// hours : 0 - 23 minutes : 0 - 59
+export const events = [
+  { date: new Date(2024, 2, 30, 9 ), text: "test", duretion: 5 },
+  { date: new Date(2024, 2, 24, 20), text: "test", duretion: 2 },
+  { date: new Date(2024, 2, 28, 3), text: "test", duretion: 2 },
+];

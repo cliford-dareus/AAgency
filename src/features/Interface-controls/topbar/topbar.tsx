@@ -19,7 +19,9 @@ import { addDateBy } from "@/utils/helpers";
 
 type Props = {};
 
-const Topbar = (props: Props) => {
+// TODO: add a reset date to current date
+
+const Topbar = ({}: Props) => {
   const dispatch = useAppDispatch();
   const { currentDate, viewSelected, firstDayOfWeek } = useAppSelector(
     (state: RootState) => state.topbar
@@ -101,7 +103,20 @@ const Topbar = (props: Props) => {
               <LucideChevronRight size={24} />
             </span>
           </div>
-        ) : null}
+        ) : (
+          <div className="flex items-center gap-4 h-full ml-16">
+            <span onClick={() => dispatch(prevWeek())}>
+              <LucideChevronLeft size={24} />
+            </span>
+            <div>
+              {firstDayOfWeek.toDateString()}-
+              {addDateBy(firstDayOfWeek, 6).toDateString()}
+            </div>
+            <span onClick={() => dispatch(nextWeek())}>
+              <LucideChevronRight size={24} />
+            </span>
+          </div>
+        )}
 
         <div className="flex items-center gap-4 ml-auto">
           <LucideBell size={20} />

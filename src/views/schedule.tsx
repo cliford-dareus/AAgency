@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
 import CalendaMonthView from "@/components/calenda-views/month-view";
+import CalendaTodayView from "@/components/calenda-views/today-view";
 import CalendaWeekView from "@/components/calenda-views/week-view";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -18,7 +19,7 @@ const Schedule = ({}: Props) => {
         ) : viewSelected === "Month" ? (
           <CalendaMonthView />
         ) : (
-          <h1>Today View</h1>
+          <CalendaTodayView />
         )}
       </div>
     </ScrollArea>
