@@ -17,11 +17,13 @@ import {
 } from "./topbar-slice";
 import { addDateBy } from "@/utils/helpers";
 
-type Props = {};
+type Props = {
+  isAdmin: boolean
+};
 
 // TODO: add a reset date to current date
 
-const Topbar = ({}: Props) => {
+const Topbar = ({isAdmin}: Props) => {
   const dispatch = useAppDispatch();
   const { currentDate, viewSelected, firstDayOfWeek } = useAppSelector(
     (state: RootState) => state.topbar
@@ -122,7 +124,6 @@ const Topbar = ({}: Props) => {
           <LucideBell size={20} />
           <LucideHelpCircle size={20} />
           <LucideGrip size={20} />
-
           <div className="h-[40px] w-[40px] rounded-full bg-black ml-4"></div>
         </div>
       </div>

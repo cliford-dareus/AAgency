@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LandingPage from "./pages/landingPage";
 import SchedulerLayout from "./components/layouts/scheduler-layout";
 import Schedule from "./views/schedule";
+import AdminRoutes from "./components/AdminRoutes";
+import AdminLayout from "./components/layouts/admin-layout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,13 +25,18 @@ const router = createBrowserRouter(
 
       {/* Protected Routes  */}
       <Route element={<ProtectedRoute />}>
-        {/* Add a layout for the scheduler dashboard pages */}
         <Route element={<SchedulerLayout />}>
           <Route path="/schedule" element={<Schedule />} />
-          {/* <Route path="/scheduler" element={<Scheduler />} />
+        </Route>
+      </Route>
+
+      {/* Admin Routes */}
+      <Route element={<AdminRoutes />}>
+        <Route element={<AdminLayout />}>
+          <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+          <Route path="/scheduler" element={<Scheduler />} />
           <Route path="/unit" element={<WingView />} />
           <Route path="/single" element={<SingleView />} />
-          <Route path="/dashboard" element={<div>Dashboard</div>} /> */}
         </Route>
       </Route>
 

@@ -39,6 +39,7 @@ const CalendaTodayView = (props: Props) => {
                 )
             )}
           </div>
+          
           {/* Lines in the background */}
           <div className="mt-[35px] absolute inset-0">
             {range(24).map((_, index) => (

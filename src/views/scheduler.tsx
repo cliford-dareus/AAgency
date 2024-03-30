@@ -16,45 +16,46 @@ import NavHeader from "@/components/layouts/header";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/topbar/topBar";
 import { fetchUsers } from "@/features/user/userSlice";
+import SchedulerWeekView from "@/components/scheduler-views/week-view";
 
 const Scheduler = () => {
-  const params = useParams();
-  const dispatch = useAppDispatch();
-  const [dayParam, setDayParam] = useState<string>("");
+  // const params = useParams();
+  // const dispatch = useAppDispatch();
+  // const [dayParam, setDayParam] = useState<string>("");
 
-  const onSubmit = async (data: z.infer<typeof UnitSchema>) => {
-    const scheduleDate = dayParam;
-    const { lead, boardName } = data;
+  // const onSubmit = async (data: z.infer<typeof UnitSchema>) => {
+  //   const scheduleDate = dayParam;
+  //   const { lead, boardName } = data;
 
-    try {
-      await dispatch(
-        addUnitFetch({ boardName, lead, scheduleDate, description: "schedule" })
-      ).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     await dispatch(
+  //       addUnitFetch({ boardName, lead, scheduleDate, description: "schedule" })
+  //     ).unwrap();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchUsers());
+  // }, []);
 
   return (
-    <div className="w-full h-full px-4">
-      <div className="container mx-auto h-full">
+    <div className="w-full h-full mt-[80px]">
+      <div className="mx-auto h-full">
         <div className="pt-4">
-          <h1 className="text-[2rem] font-bold">Scheduler</h1>
+          {/* <h1 className="text-[2rem] font-bold">Scheduler</h1> */}
 
           {/* Top Bar with search and profile */}
-          <TopBar setDayParam={setDayParam} />
+          {/* <TopBar setDayParam={setDayParam} /> */}
 
           {/* Board Header Nav */}
-          <NavHeader onSubmit={onSubmit} dayParam={dayParam} />
+          {/* <NavHeader onSubmit={onSubmit} dayParam={dayParam} /> */}
 
           <div className="">
-            <div className="my-4">
+            {/* <div className="my-4">
               <h2 className="font-bold">SHIFT/POSITION</h2>
-              {/* <Popover>
+              <Popover>
                 <PopoverTrigger>
                   <Settings />
                 </PopoverTrigger>
@@ -62,9 +63,10 @@ const Scheduler = () => {
                   <h2 className="font-bold">Edit {params.wingId}</h2>
                   <UnitEditForm scheduleDate={dayParam} unit={params.wingId!} />
                 </PopoverContent>
-              </Popover> */}
-            </div>
-            <Outlet context={dayParam} />
+              </Popover>
+            </div> */}
+            {/* <Outlet /> */}
+            <SchedulerWeekView />
           </div>
         </div>
       </div>
