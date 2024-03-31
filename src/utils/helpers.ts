@@ -70,24 +70,27 @@ export const events = [
     id: 1,
     date: new Date(2024, 2, 30, 9),
     text: "test",
-    duretion: 5,
+    duration: 5,
     roomId: 3,
   },
   {
     id: 2,
     date: new Date(2024, 2, 24, 3),
     text: "test",
-    duretion: 2,
+    duration: 2,
     roomId: 2,
   },
   {
     id: 3,
     date: new Date(2024, 2, 28, 3),
     text: "test",
-    duretion: 2,
+    duration: 2,
     roomId: 2,
   },
 ];
+
+export type Events =  typeof events;
+export type Event =  typeof events[number];
 
 export const rooms = [
   { id: 1, name: "room 1" },

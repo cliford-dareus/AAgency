@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import TopBar from "@/components/topbar/topBar";
 import { fetchUsers } from "@/features/user/userSlice";
 import SchedulerWeekView from "@/components/scheduler-views/week-view";
+import { range } from "@/utils/helpers";
 
 const Scheduler = () => {
   // const params = useParams();
@@ -67,6 +68,34 @@ const Scheduler = () => {
             </div> */}
             {/* <Outlet /> */}
             <SchedulerWeekView />
+
+            {/* Employee List with draggable card to drag into the timeline and make a complete schedule */}
+            <div className="">
+              <ul>
+                {range(10).map((_, index) => (
+                  // Draggable Element to drag into the timeline
+                  <li
+                    draggable
+                    id={`${index}`}
+                    key={index}
+                    onDragStart={(event) => {
+                      event.dataTransfer?.setData(
+                        "text/plain",
+                        JSON.stringify({
+                          id: index * 2,
+                          isNew: true,
+                          text: "new Event",
+                          duration: 5,
+                        })
+                      ); // event.dataTransfer?.setData("text/plain", {isNew: true});
+                    }}
+                    className="h-[50px] flex items-center border-t"
+                  >
+                    Employee Name{" "}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

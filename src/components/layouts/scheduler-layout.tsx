@@ -12,6 +12,7 @@ const SchedulerLayout = (props: Props) => {
 
   return (
     <div className="h-screen flex overflow-hidden">
+      {/* Sidebar */}
       <Sidebar>
         <Sidebarlinks
           icon={<LucideLayoutDashboard size={18} />}
@@ -20,8 +21,10 @@ const SchedulerLayout = (props: Props) => {
           alert={false}
         />
       </Sidebar>
+      
+      {/* Main content */}
       <main className="flex-1 relative">
-        <Topbar />
+        <Topbar isAdmin={false}/>
         <div className="container mx-auto">
           <Outlet />
         </div>
