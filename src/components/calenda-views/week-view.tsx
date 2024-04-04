@@ -62,7 +62,7 @@ const CalendaWeekView = ({}: Props) => {
                     <Event
                       date={event.date}
                       text={event.text}
-                      duretion={event.duretion}
+                      duration={event.duration}
                     />
                   )
               )}
@@ -93,17 +93,17 @@ const CalendaWeekView = ({}: Props) => {
 export const Event = ({
   date,
   text,
-  duretion,
+  duration,
 }: {
   date: Date;
   text: string;
-  duretion: number;
+  duration: number;
 }) => {
   return (
     <div
       style={{
         top: `${date.getHours() * 35 + 17 + 35 / 2 + date.getMinutes() / 2}px`,
-        height: `${duretion * 35}px`,
+        height: `${duration * 35}px`,
       }}
       className="absolute bg-green-500  left-0 right-0 rounded-sm z-10" 
     >

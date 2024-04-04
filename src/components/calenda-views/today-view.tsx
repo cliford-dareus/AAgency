@@ -3,11 +3,19 @@ import { RootState } from "@/app/store";
 import { events, isSameDate, range } from "@/utils/helpers";
 import { LucideClock } from "lucide-react";
 import { Event } from "./week-view";
+import { useMemo } from "react";
 
 type Props = {};
 
 const CalendaTodayView = (props: Props) => {
   const { currentDate } = useAppSelector((state: RootState) => state.topbar);
+
+  const eventsForCurrentDate = useMemo(
+    () =>
+      events.filter((event) => isSameDate(new Date(currentDate), event.date)),
+    [currentDate, events]
+  );
+
   return (
     <div className="w-full">
       <div className="grid grid-cols-[40px_1fr]">
@@ -15,16 +23,14 @@ const CalendaTodayView = (props: Props) => {
           <span className="h-[35px] flex items-center justify-center">
             <LucideClock size={24} />
           </span>
-          {range(24).map((hour, index) => {
-            return (
-              <div
-                key={index}
-                className="border-t h-[35px] w-full flex items-center justify-center"
-              >
-                <p className="">{hour}</p>
-              </div>
-            );
-          })}
+          {range(24).map((hour, index) => (
+            <div
+              key={index}
+              className="border-t h-[35px] w-full flex items-center justify-center"
+            >
+              <p className="">{hour}</p>
+            </div>
+          ))}
         </div>
 
         <div className="mt-[16px] relative">
@@ -32,15 +38,11 @@ const CalendaTodayView = (props: Props) => {
             {new Date().toISOString()}
           </div>
           <div>
-            {events.map(
-              (event) =>
-                isSameDate(new Date(currentDate), event.date) && (
-                 <Event date={event.date} text={event.text} duretion={event.duretion} /> 
-                )
-            )}
+            {eventsForCurrentDate.map((event) => (
+              <Event key={event.date.getTime()} {...event} />
+            ))}
           </div>
-          
-          {/* Lines in the background */}
+
           <div className="mt-[35px] absolute inset-0">
             {range(24).map((_, index) => (
               <div
@@ -54,5 +56,4 @@ const CalendaTodayView = (props: Props) => {
     </div>
   );
 };
-
 export default CalendaTodayView;

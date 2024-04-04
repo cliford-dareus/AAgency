@@ -14,6 +14,7 @@ import SchedulerLayout from "./components/layouts/scheduler-layout";
 import Schedule from "./views/schedule";
 import AdminRoutes from "./components/AdminRoutes";
 import AdminLayout from "./components/layouts/admin-layout";
+import Dashboard from "./views/dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,8 +33,8 @@ const router = createBrowserRouter(
 
       {/* Admin Routes */}
       <Route element={<AdminRoutes />}>
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route element={<AdminLayout />}>
-          <Route path="/dashboard" element={<h1>Dashboard</h1>} />
           <Route path="/scheduler" element={<Scheduler />} />
           <Route path="/unit" element={<WingView />} />
           <Route path="/single" element={<SingleView />} />

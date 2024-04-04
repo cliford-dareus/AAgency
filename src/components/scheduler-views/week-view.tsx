@@ -94,7 +94,7 @@ const SchedulerWeekView = (props: Props) => {
 
         {/* Events column */}
         <div className="w-full h-full flex overflow-x-scroll no-scrollbar">
-          <div className="flex relative" draggable>
+          <div className="flex relative">
             {DAY_WEEK.map((_, index) => (
               <div className="flex flex-col" key={index}>
                 <div className="">
@@ -167,9 +167,11 @@ const SchedulerWeekView = (props: Props) => {
                           ) &&
                           rowIndex === 2 && (
                             <DraggableElement
+                              events={events}
                               event={event}
                               index={index}
                               drag={drag}
+                              setEvent={setEvent}
                             />
                           )
                       )}
