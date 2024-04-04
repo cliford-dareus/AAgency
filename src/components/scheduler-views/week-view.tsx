@@ -156,19 +156,19 @@ const SchedulerWeekView = (props: Props) => {
                       </div>
                       {/* Event  */}
                       {event.map(
-                        (event) =>
+                        (currentevent) =>
                           isSameDate(
                             new Date(
-                              new Date(event.date).getFullYear(),
-                              new Date(event.date).getMonth(),
-                              new Date(event.date).getDate()
+                              new Date(currentevent.date).getFullYear(),
+                              new Date(currentevent.date).getMonth(),
+                              new Date(currentevent.date).getDate()
                             ),
                             addDateBy(firstDayOfWeek, index)
                           ) &&
                           rowIndex === 2 && (
                             <DraggableElement
-                              events={events}
-                              event={event}
+                              events={event}
+                              event={currentevent}
                               index={index}
                               drag={drag}
                               setEvent={setEvent}

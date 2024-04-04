@@ -1,7 +1,8 @@
 import { Event } from "@/utils/helpers";
-import React, { DragEvent, useEffect, useState } from "react";
+import React, { DragEvent, useEffect, useRef, useState } from "react";
 import { DraggableData } from "./week-view";
 import { Resizable } from "re-resizable";
+import ResizableElement from "./resizable-element";
 
 /**
  * DraggableElement component props
@@ -28,10 +29,10 @@ type DraggableElementProps = {
 };
 
 const DraggableElement = React.memo(
-  ({ events, event, setEvent, index, drag }: DraggableElementProps) => {
-    const DraggableElementRef = React.useRef<HTMLDivElement | null>(null);
+  ({ event, setEvent, index, drag }: DraggableElementProps) => {
+    const DraggableElementRef = useRef<HTMLDivElement | null>(null);
     const [isDraggable, setIsDraggable] = useState(true);
-    const squareHover = React.useRef<string | null>(null);
+    const squareHover = useRef<string | null>(null);
     let duration = event.duration;
     const top = event.roomId * 50 + 10;
     const left = 100 * 24 * index + new Date(event.date).getHours() * 100;
@@ -68,26 +69,13 @@ const DraggableElement = React.memo(
         onDragStart={handleDragStart}
         ref={DraggableElementRef}
       >
-        <Resizable
-          style={{ border: "1px solid black" }}
-          size={{ width: state.width, height: state.height }}
-          maxHeight={DraggableElementRef.current?.offsetHeight!}
-          minHeight={DraggableElementRef.current?.offsetHeight!}
-          onResizeStart={() => setIsDraggable(false)}
-          onResizeStop={(e, direction, ref, d) => {
-            const dur = Math.ceil(d.width) / 100;
-            if (dur === 0 && event.duration <= 1) return;
-           
-            setEvent((prev) => {
-              const index = prev.findIndex((e) => e.id === event.id);
-              if (index === -1) return prev;
-              const otherEvents = [...prev.slice(0, index), ...prev.slice(index + 1)];
-              const newDuration = Math.max(1, event.duration + dur);
-              const newEvent = { ...event, duration: newDuration };
-              return [...otherEvents, newEvent];
-            });
-            setIsDraggable(true);
-          }}
+        <ResizableElement
+          ref={DraggableElementRef}
+          key={id}
+          setIsDraggable={setIsDraggable}
+          event={event}
+          setEvent={setEvent}
+          state={state}
         >
           <div className="w-full absolute inset-0 flex select-none">
             {Array.from({ length: event.duration }, (_, i) => (
@@ -105,7 +93,7 @@ const DraggableElement = React.memo(
           <div className="w-[80%] select-none">
             Events start at: {event.date.getHours()}
           </div>
-        </Resizable>
+        </ResizableElement>
       </div>
     );
   }
