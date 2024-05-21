@@ -18,18 +18,18 @@ import {
 import { addDateBy } from "@/utils/helpers";
 
 type Props = {
-  isAdmin: boolean
+  isAdmin: boolean;
+  pathname?: string;
 };
 
 // TODO: add a reset date to current date
 
-const Topbar = ({isAdmin}: Props) => {
+const Topbar = ({isAdmin, pathname}: Props) => {
   const dispatch = useAppDispatch();
   const { currentDate, viewSelected, firstDayOfWeek } = useAppSelector(
     (state: RootState) => state.topbar
   );
   const DATE = new Date(currentDate);
-
   const handleSelectedView = (item: "Today" | "Week" | "Month") => {
     if (viewSelected === item) return;
     else {
@@ -40,7 +40,7 @@ const Topbar = ({isAdmin}: Props) => {
   return (
     <div className="h-[80px] absolute top-0 left-0 right-0 border-b ">
       <div className="container mx-auto h-full flex items-center gap-4">
-        <div className="flex items-center gap-2">
+        {pathname !== '/dashboard' && <div className="flex items-center gap-2">
           {["Today", "Week", "Month"].map((item: string) => (
             <Button
               key={item}
@@ -52,8 +52,9 @@ const Topbar = ({isAdmin}: Props) => {
               {item}
             </Button>
           ))}
-        </div>
-
+        </div>}
+        
+        {pathname !== "/dashboard" && <>
         {viewSelected === "Today" ? (
           <div className="flex items-center gap-4 h-full ml-16">
             <span
@@ -119,6 +120,7 @@ const Topbar = ({isAdmin}: Props) => {
             </span>
           </div>
         )}
+        </>}
 
         <div className="flex items-center gap-4 ml-auto">
           <LucideBell size={20} />

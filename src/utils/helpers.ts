@@ -1,5 +1,3 @@
-import { start } from "repl";
-
 export const range = (key: number) => [...Array(key).keys()];
 
 export const rangeAbs = (end: number) => {
@@ -75,7 +73,7 @@ export const events = [
   },
   {
     id: 2,
-    date: new Date(2024, 2, 24, 3),
+    date: new Date(2024, 5, 20, 3),
     text: "test",
     duration: 2,
     roomId: 2,

@@ -33,10 +33,9 @@ const router = createBrowserRouter(
 
       {/* Admin Routes */}
       <Route element={<AdminRoutes />}>
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route element={<AdminLayout />}>
           <Route path="/scheduler" element={<Scheduler />} />
-          <Route path="/unit" element={<WingView />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/single" element={<SingleView />} />
         </Route>
       </Route>

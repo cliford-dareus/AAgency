@@ -1,5 +1,6 @@
 import { useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   icon: any;
@@ -15,9 +16,11 @@ const Sidebarlinks = ({
   alert,
   active,
 }: Props) => {
+    const navigate = useNavigate();
     const expanded = useAppSelector((state: RootState) => state.sidebar.expanded);
   return (
     <li
+      onClick={() => navigate(`${text.toLowerCase()}`)}
       className={`
       relative flex items-center py-2 px-3 my-1
       font-medium rounded-md cursor-pointer

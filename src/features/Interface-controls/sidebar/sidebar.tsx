@@ -11,7 +11,6 @@ type Props = {
 const Sidebar = ({ children }: Props) => {
   const dispatch = useAppDispatch();
   const expanded = useAppSelector((state: RootState) => state.sidebar.expanded);
-
   const active = useAppSelector((state: RootState) => state.sidebar.expanded);
 
   return (

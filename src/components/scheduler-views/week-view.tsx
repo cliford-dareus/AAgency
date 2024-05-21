@@ -5,7 +5,11 @@ import { RootState } from "@/app/store";
 import { useRef, useState } from "react";
 import DraggableElement from "./draggable-element";
 
-type Props = {};
+type Props = {
+  // Pass props from parent component
+  event: any;
+  rooms: any
+};
 
 export type DraggableData = {
   id: string;
@@ -93,6 +97,7 @@ const SchedulerWeekView = (props: Props) => {
         </div>
 
         {/* Events column */}
+        {/* Todo: Have this Events column scroll with js */}
         <div className="w-full h-full flex overflow-x-scroll no-scrollbar">
           <div className="flex relative">
             {DAY_WEEK.map((_, index) => (
