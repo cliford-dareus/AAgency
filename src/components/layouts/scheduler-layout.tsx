@@ -16,7 +16,8 @@ const SchedulerLayout = (props: Props) => {
       <Sidebar>
         <Sidebarlinks
           icon={<LucideLayoutDashboard size={18} />}
-          text="Dashboard"
+          text="Profile"
+          path="/profile"
           active={true}
           alert={false}
         />

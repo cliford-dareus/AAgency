@@ -1,32 +1,33 @@
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
 import { useNavigate } from "react-router-dom";
+import { setActiveLink } from "./sidebar-slice";
 
 type Props = {
   icon: any;
   text: string;
+  path: string;
   alert?: boolean;
   expanded?: boolean;
-  active?: boolean;
+  active?: string;
 };
 
-const Sidebarlinks = ({
-  icon,
-  text,
-  alert,
-  active,
-}: Props) => {
-    const navigate = useNavigate();
-    const expanded = useAppSelector((state: RootState) => state.sidebar.expanded);
+const Sidebarlinks = ({ icon, text, alert, path, active }: Props) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const expanded = useAppSelector((state: RootState) => state.sidebar.expanded);
   return (
     <li
-      onClick={() => navigate(`${text.toLowerCase()}`)}
-      className={`
+      onClick={() => {
+        navigate(`${path.toLowerCase()}`);
+        dispatch(setActiveLink(text.toLocaleLowerCase()));
+      }}
+      className={`  
       relative flex items-center py-2 px-3 my-1
       font-medium rounded-md cursor-pointer
       transition-colors group
       ${
-        active
+        active === text.toLocaleLowerCase()
           ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
           : "hover:bg-indigo-50 text-gray-600"
       }

@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import Root from "./components/layouts/Root";
 import Scheduler from "./views/scheduler";
-import WingView from "./views/unitView";
 import SingleView from "./views/singleView";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LandingPage from "./pages/landingPage";

@@ -4,7 +4,7 @@ function AdminRoutes() {
   const isLogin = true;
   const isAdmin = true;
   
-  return isLogin && isAdmin ? <Outlet /> : <Navigate to="/login" />;
+  return isLogin && isAdmin ? <Outlet /> : <Navigate to="/schedule" />;
 }
 
 export default AdminRoutes;
