@@ -2,7 +2,8 @@ import { useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
 import { cn } from "@/lib/utils";
 import { DAY_WEEK } from "@/utils/common";
-import { events, getDaysInMonth, getSortedDays, isSameDate } from "@/utils/helpers";
+import { events } from "@/utils/dummy-data";
+import {  getDaysInMonth, getSortedDays, isSameDate } from "@/utils/helpers";
 
 type Props = {};
 

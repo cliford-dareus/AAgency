@@ -1,9 +1,10 @@
 import { useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
-import { events, isSameDate, range } from "@/utils/helpers";
+import { isSameDate, range } from "@/utils/helpers";
 import { LucideClock } from "lucide-react";
 import { Event } from "./week-view";
 import { useMemo } from "react";
+import { events } from "@/utils/dummy-data";
 
 type Props = {};
 

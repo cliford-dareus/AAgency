@@ -1,8 +1,8 @@
-import { Event } from "@/utils/helpers";
-import React, { DragEvent, useEffect, useRef, useState } from "react";
+import React, { DragEvent, useRef, useState } from "react";
 import { DraggableData } from "./week-view";
-import { Resizable } from "re-resizable";
+import {  } from "re-resizable";
 import ResizableElement from "./resizable-element";
+import { Event } from "@/features/events/events-slice";
 
 /**
  * DraggableElement component props
@@ -20,6 +20,9 @@ type DraggableElementProps = {
   events: Event[];
   event: Event;
   index: number;
+  position: {
+    top: number;
+  };
   setEvent: React.Dispatch<React.SetStateAction<Event[]>>;
   drag: (
     event: DragEvent<HTMLDivElement>,
@@ -29,12 +32,11 @@ type DraggableElementProps = {
 };
 
 const DraggableElement = React.memo(
-  ({ event, setEvent, index, drag }: DraggableElementProps) => {
+  ({events, event, setEvent, index, drag, position }: DraggableElementProps) => {
     const DraggableElementRef = useRef<HTMLDivElement | null>(null);
     const [isDraggable, setIsDraggable] = useState(true);
     const squareHover = useRef<string | null>(null);
     let duration = event.duration;
-    const top = event.roomId * 50 + 10;
     const left = 100 * 24 * index + new Date(event.date).getHours() * 100;
     const right = 100 * 24 * 7 - left - 100 * duration;
     const id = `${event.id}`;
@@ -63,7 +65,7 @@ const DraggableElement = React.memo(
     return (
       <div
         id={id}
-        style={{ top: `${top}px`, left: `${left}px`, right: `${right}px` }}
+        style={{ top: `${position.top}px`, left: `${left}px`, right: `${right}px` }}
         className="absolute z-10 select-none bg-green-500"
         draggable={isDraggable}
         onDragStart={handleDragStart}

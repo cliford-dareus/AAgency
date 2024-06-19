@@ -2,9 +2,9 @@ import { useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
 import { cn } from "@/lib/utils";
 import { DAY_WEEK } from "@/utils/common";
+import { events } from "@/utils/dummy-data";
 import {
   addDateBy,
-  events,
   hourNow,
   isSameDate,
   minuteNow,

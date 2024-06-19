@@ -1,14 +1,16 @@
 import { DAY_WEEK } from "@/utils/common";
-import { addDateBy, events, isSameDate, range, rooms } from "@/utils/helpers";
-import { useAppSelector } from "@/app/hooks";
+import { addDateBy, isSameDate, range } from "@/utils/helpers";
+import { rooms } from "@/utils/dummy-data";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
 import { useRef, useState } from "react";
 import DraggableElement from "./draggable-element";
+import { addEvent, moveEvent } from "@/features/events/events-slice";
 
 type Props = {
   // Pass props from parent component
-  event: any;
-  rooms: any
+  // event: any;
+  // rooms: any;
 };
 
 export type DraggableData = {
@@ -22,7 +24,8 @@ export type DraggableData = {
 type DraggableProps = DraggableData & { element: HTMLElement };
 
 const SchedulerWeekView = (props: Props) => {
-  const [event, setEvent] = useState(events);
+  const dispatch = useAppDispatch();
+  const events = useAppSelector((state: RootState) => state.events.events);
   const dragOverRef = useRef<any | null>(null);
   const dragRef = useRef<DraggableProps | null>(null);
   const { firstDayOfWeek } = useAppSelector((state: RootState) => state.topbar);
@@ -52,7 +55,7 @@ const SchedulerWeekView = (props: Props) => {
         duration,
         date,
       };
-      setEvent((prev) => [...prev, newEvent]);
+      dispatch(addEvent(newEvent));
       return;
     }
 
@@ -62,20 +65,22 @@ const SchedulerWeekView = (props: Props) => {
     // the value of the square property from the id of the drop target.
     const time = Number(dragOverRef.current.id) - square;
 
-    setEvent((prev) =>
-      prev.map((e) =>
-        e.id === roomid
-          ? {
-              ...e,
-              roomId: dragOverRef.current.roomId + 1,
-              date: new Date(
-                firstDayOfWeek.getFullYear(),
-                firstDayOfWeek.getMonth(),
-                firstDayOfWeek.getDate() + dragOverRef.current.index,
-                time
-              ),
-            }
-          : e
+    dispatch(
+      moveEvent(
+        events.map((e) =>
+          e.id === roomid
+            ? {
+                ...e,
+                roomId: dragOverRef.current.roomId + 1,
+                date: new Date(
+                  firstDayOfWeek.getFullYear(),
+                  firstDayOfWeek.getMonth(),
+                  firstDayOfWeek.getDate() + dragOverRef.current.index,
+                  time
+                ),
+              }
+            : e
+        )
       )
     );
   };
@@ -149,6 +154,8 @@ const SchedulerWeekView = (props: Props) => {
                           drop(e);
                           const target = e.target as HTMLElement;
                           target?.offsetParent?.classList.remove("bg-red-200");
+                          const cH = target?.offsetHeight;
+                          target.offsetParent?.classList.add(`h-[${cH += 50}px]`);
                         }}
                       >
                         {range(24).map((_, colIndex) => (
@@ -160,7 +167,7 @@ const SchedulerWeekView = (props: Props) => {
                         ))}
                       </div>
                       {/* Event  */}
-                      {event.map(
+                      {events?.map(
                         (currentevent) =>
                           isSameDate(
                             new Date(
@@ -170,13 +177,25 @@ const SchedulerWeekView = (props: Props) => {
                             ),
                             addDateBy(firstDayOfWeek, index)
                           ) &&
-                          rowIndex === 2 && (
+                          currentevent.roomId === rowIndex + 1 && (
                             <DraggableElement
-                              events={event}
+                              key={currentevent.id}
+                              events={events}
                               event={currentevent}
                               index={index}
                               drag={drag}
-                              setEvent={setEvent}
+                              setEvent={() => {}}
+                              position={{
+                                top:
+                                  currentevent.roomId * 50 +
+                                  10 +
+                                  events?.filter(
+                                    (e) =>
+                                      e.roomId === currentevent.roomId &&
+                                      e.id !== currentevent.id
+                                  ).length *
+                                    20,
+                              }}
                             />
                           )
                       )}

@@ -6,6 +6,7 @@ import boardReducer from "../features/board/boardSlice";
 import userReducer from "../features/user/userSlice";
 import sidebarReducer from "../features/Interface-controls/sidebar/sidebar-slice";
 import topbarReducer from "../features/Interface-controls/topbar/topbar-slice";
+import eventsReducer from "../features/events/events-slice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     unit: unitReducer,
     shifts: shiftsReducer,
     user: userReducer,
+    events: eventsReducer,
   },
 });
 

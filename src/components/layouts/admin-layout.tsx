@@ -11,6 +11,8 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { RootState } from "@/app/store";
+import CreateScheduleModal from "../modal/create-schedule-modal";
+import Portal from "../portal";
 
 type Props = {};
 
@@ -65,11 +67,13 @@ const Links = () => {
             Create
           </span>
         </Button>
-        {createScheduleModalActive && (
-          <div className="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] bg-green-500 h-[400px] p-4">
-            <input />
-          </div>
-        )}
+
+        <Portal>
+          <CreateScheduleModal
+            createScheduleModalActive={createScheduleModalActive}
+            setCreateScheduleModalActive={setCreateScheduleModalActive}
+          />
+        </Portal>
       </div>
 
       <Sidebarlinks

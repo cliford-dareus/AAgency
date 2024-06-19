@@ -15,8 +15,6 @@ const initialState = {
   currentDate: String(new Date()),
 } as InitialStateProps;
 
-console.log(initialState);
-
 export const topbarSlice = createSlice({
   name: "topbar",
   initialState,

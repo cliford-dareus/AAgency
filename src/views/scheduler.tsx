@@ -1,47 +1,11 @@
-import { Outlet, useParams } from "react-router-dom";
-// import { Settings } from "lucide-react";
-
-import * as z from "zod";
-import { UnitSchema } from "@/utils/schema";
-import { useAppDispatch } from "@/app/hooks";
-import { addUnitFetch } from "@/features/units/unitSlice";
-import NavHeader from "@/components/layouts/header";
-
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
-// import UnitEditForm from "@/components/Forms/unitEditForm";
 import { useEffect, useState } from "react";
-import TopBar from "@/components/topbar/topBar";
-import { fetchUsers } from "@/features/user/userSlice";
 import SchedulerWeekView from "@/components/scheduler-views/week-view";
 import { range } from "@/utils/helpers";
 import { Button } from "@/components/ui/button";
 
 const Scheduler = () => {
   const [employeeModalIsOpen, setEmployeeModalIsOpen] = useState(false);
-  // const params = useParams();
-  // const dispatch = useAppDispatch();
-  // const [dayParam, setDayParam] = useState<string>("");
-
-  // const onSubmit = async (data: z.infer<typeof UnitSchema>) => {
-  //   const scheduleDate = dayParam;
-  //   const { lead, boardName } = data;
-
-  //   try {
-  //     await dispatch(
-  //       addUnitFetch({ boardName, lead, scheduleDate, description: "schedule" })
-  //     ).unwrap();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   dispatch(fetchUsers());
-  // }, []);
+ 
 
   return (
     <div className="w-full h-full mt-[80px]">
