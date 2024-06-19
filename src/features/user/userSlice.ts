@@ -10,11 +10,13 @@ export const fetchUsers = createAsyncThunk("user/fetch", async () => {
 
 interface UnitState {
   user: User[];
+  role: "employee" | "admin" | "manager";
   loading: boolean;
 }
 
 const initialState = {
   user: [],
+  role: "employee",
   loading: false,
 } as UnitState;
 
@@ -31,14 +33,6 @@ const unitSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       });
-    //   .addCase(addUnitFetch.fulfilled, (state, action) => {
-    //     state.unit = [...state.unit, action.payload];
-    //   })
-    //   .addCase(updateUnitFetch.fulfilled, (state, action) => {
-    //     if (action.payload.lead) {
-    //       state.unit[0].lead = action.payload.lead;
-    //     }
-    //   });
   },
 });
 

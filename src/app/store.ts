@@ -4,14 +4,20 @@ import unitReducer from "../features/units/unitSlice";
 import shiftsReducer from "../features/shifts/shiftSlice";
 import boardReducer from "../features/board/boardSlice";
 import userReducer from "../features/user/userSlice";
+import sidebarReducer from "../features/Interface-controls/sidebar/sidebar-slice";
+import topbarReducer from "../features/Interface-controls/topbar/topbar-slice";
+import eventsReducer from "../features/events/events-slice";
 
 export const store = configureStore({
   reducer: {
+    sidebar: sidebarReducer,
+    topbar: topbarReducer,
     board: boardReducer,
     shedule: scheduleReducer,
     unit: unitReducer,
     shifts: shiftsReducer,
-    user: userReducer
+    user: userReducer,
+    events: eventsReducer,
   },
 });
 
